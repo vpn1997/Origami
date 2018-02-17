@@ -19,10 +19,7 @@ class TypeInput extends React.Component {
 
   shouldComponentUpdate() {;
     if(this.props.calling_context=="demo2")
-    {
-   
       return true;
-    }
     else
       return false;
   }
@@ -133,55 +130,43 @@ class TypeInput extends React.Component {
   }
 
   render() {
-    let fin=[];
-    let k=this.props.prop;
-    for(var i=0;i<k.length;i++)
-    {
-
-      if(k[i].id==1)
-      {
+    let fin = [];
+    let k = this.props.prop;
+    for (var i = 0; i < k.length; i++) {
+      if (k[i].id == 1) {
         fin.push(
-
-          <div key ={i} style={{marginTop:"60px"}}>
-
-              <TextSingleInput
-                  key={Math.random()}
-                  index={i}
-                  calling_context={this.props.calling_context}
-                  label={k[i].label}
-                />
-                <br key={Math.random()} />
-                <br key={Math.random()} />
+          <div key={i} style={{ marginTop: '60px' }}>
+            <TextSingleInput
+              key={Math.random()}
+              index={i}
+              calling_context={this.props.calling_context}
+              label={k[i].label}
+            />
+            <br key={Math.random()} />
+            <br key={Math.random()} />
           </div>
-
-          );
-      }
-      else
-      {
+        );
+      } else {
         fin.push(
-             <div key ={i}>
-              <ImageSingleInput
-                key={Math.random()}
-                index={i}
-                updateFormData={this.updateFormData}
-                calling_context={this.props.calling_context}
-                label={k[i].label}
-              />,
-              <br key={Math.random()} />
-              <br key={Math.random()} />
-            </div>
-
-          );
+          <div key={i}>
+            <ImageSingleInput
+              key={Math.random()}
+              index={i}
+              updateFormData={this.updateFormData}
+              calling_context={this.props.calling_context}
+              label={k[i].label}
+            />
+            <br key={Math.random()} />
+            <br key={Math.random()} />
+          </div>
+        );
       }
-
     }
 
-
-    var but=null;
-    if(this.props.calling_context=="demo")
-    {
-      but=(
-                <div className="ui row">
+    var but = null;
+    if (this.props.calling_context == 'demo') {
+      but = (
+        <div className="ui row">
           <pre className="ui centered center aligned origami-demo-send-button">
             <br />
             <RaisedButton
@@ -196,7 +181,8 @@ class TypeInput extends React.Component {
               }}
             />
           </pre>
-        </div>);
+        </div>
+      );
     }
     return (
       <div className="ui centered center aligned grid">

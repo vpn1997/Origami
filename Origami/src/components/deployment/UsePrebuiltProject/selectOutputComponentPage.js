@@ -20,34 +20,38 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import IconButton from 'material-ui/IconButton';
 import Save from 'material-ui-icons/Save';
 import RaisedButton from 'material-ui/RaisedButton';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+import {
+  SortableContainer,
+  SortableElement,
+  arrayMove,
+} from 'react-sortable-hoc';
 import {getOutputComponentById} from "../../outputcomponents/index"
 toastr.options.closeButton = true;
 import { Modal, Button } from 'antd';
 
-const SortableItem = SortableElement(({value}) =>
- <li style={{listStyleType:'none'}}>{value}</li>
-);
+const SortableItem = SortableElement(({ value }) => (
+  <li style={{ listStyleType: 'none' }}>{value}</li>
+));
 
-
-const SortableList = SortableContainer(({items} ) => {
+const SortableList = SortableContainer(({ items }) => {
   return (
-      <div style={{
-         width: '900px',
+    <div
+      style={{
+        width: '900px',
         height: '400px',
         margin: '0 auto',
         overflowY: 'scroll',
         backgroundColor: '#f3f3f3',
         border: '1px solid #EFEFEF',
         borderRadius: 3,
-    }}>
+      }}
+    >
       {items.map((value, index) => (
         <SortableItem key={`item-${index}`} index={index} value={value} />
       ))}
     </div>
   );
 });
-
 
 class SelectOutputComponentPage extends React.Component {
   constructor(props, context) {
@@ -67,8 +71,15 @@ class SelectOutputComponentPage extends React.Component {
     this.id=props["params"].repoId;
     this.base_component_id=1;
     this.modify=(props["params"].type==="modify")
-    this.forwardAddress="/ngh/user/"+this.state.user_id+"/"+props["routeParams"].repoName+"/"+ props["routeParams"].repoId+"/demo";   
-  }
+        this.forwardAddress =
+      '/ngh/user/' +
+      this.state.user_id +
+      '/' +
+      props['routeParams'].repoName +
+      '/' +
+      props['routeParams'].repoId +
+      '/demo';
+    }
 
     onSortEnd({oldIndex, newIndex}){
     var old=this.state.array;
@@ -109,8 +120,7 @@ class SelectOutputComponentPage extends React.Component {
           let net=[];
           let lab=[];
           Object.keys(k).forEach(function(key,index) {
-            switch(k[key].id)
-            {
+          switch(k[key].id){
 
               case 1:
                   net.push("Text Output");
@@ -233,7 +243,7 @@ class SelectOutputComponentPage extends React.Component {
         {getOutputComponentById(id,le,"demo2",data)}
           
           <div style={{marginLeft: '40%',width: '50%'}}>
-          <button  onClick={this.onDragOut.bind(this,{i})}   type="button" className="btn btn-primary">Delete</button>
+          <button  onClick={this.onDelete.bind(this,{i})}   type="button" className="btn btn-primary">Delete</button>
           <button  type="button" onClick={this.showModal.bind(this,{i})} className="btn btn-primary" style={{float:'right'}}>Label</button>
            </div>
            <br/>
@@ -246,7 +256,7 @@ class SelectOutputComponentPage extends React.Component {
     this.setState({ array: arrayvar,Rows:row,visible:false,label:lab,value:""});
   }
 
-    onDragOut(data){
+    onDelete(data){
 
     var index=data["i"];
     var lab=this.state.label;
@@ -441,49 +451,58 @@ class SelectOutputComponentPage extends React.Component {
                   selected: this.state.outputComponentDemoModel.base_component_id
                 }).map((showcasecard, index) => showcasecard)}
 
+                <Droppable
+                  types={['l1', 'l2', 'l3', 'l4', 'l5', 'l6']}
+                  onDrop={this.onDrop.bind(this)}
+                >
+                  <div style={myScrollbar}>
+                    <div style={{ width: 'fit-content', margin: 'auto' }}>
+                      <b style={{ fontSize: 'large' }}>Drag N Drop</b>
+                    </div>
 
-        <Droppable types={['l1','l2','l3','l4','l5','l6']}  onDrop={this.onDrop.bind(this)}>
-        <div style={myScrollbar}>
-        <div style={{ width: 'fit-content',margin: "auto"}}>
-        <b style={{ fontSize: "large"}}>Drag N Drop</b>
-        </div>
-          
-          
-          
-          {this.state.Rows.length>0 &&
-           
-            <SortableList items={this.state.Rows} onSortEnd={this.onSortEnd.bind(this)} lockToContainerEdges={true} lockOffset="95px" />
-             }
-        <Modal
-          title="Input Label"
-          visible={this.state.visible}
-          onOk={this.handleOk.bind(this)}
-          onCancel={this.handleCancel.bind(this)}
-        >
-
-        <form onSubmit={this.handleOk.bind(this)}>
-        <div className="form-group">
-          <label for="usr">Label:</label><br/>
-          <input type="text" className="form-control" value={this.state.value} onChange={this.handleChange.bind(this)} />
-        </div>
-       </form>
-
-        </Modal>
-
-
-            
-        </div>
-        </Droppable>
-        
+                    {this.state.Rows.length > 0 && (
+                      <SortableList
+                        items={this.state.Rows}
+                        onSortEnd={this.onSortEnd.bind(this)}
+                        lockToContainerEdges={true}
+                        lockOffset="95px"
+                      />
+                    )}
+                    <Modal
+                      title="Input Label"
+                      visible={this.state.visible}
+                      onOk={this.handleOk.bind(this)}
+                      onCancel={this.handleCancel.bind(this)}
+                    >
+                      <form onSubmit={this.handleOk.bind(this)}>
+                        <div className="form-group">
+                          <label for="usr">Label:</label>
+                          <br />
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={this.state.value}
+                            onChange={this.handleChange.bind(this)}
+                          />
+                        </div>
+                      </form>
+                    </Modal>
+                  </div>
+                </Droppable>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-          <div style={but}>
-          <RaisedButton label="Submit" primary={true} onClick={this.onSubmit.bind(this)}  />
-          </div>
-        <br/>
-        <br/>
+        <div style={but}>
+          <RaisedButton
+            label="Submit"
+            primary={true}
+            onClick={this.onSubmit.bind(this)}
+          />
+        </div>
+        <br />
+        <br />
+        
         <div
           className="ui fluid centered row"
           style={{

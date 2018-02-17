@@ -105,8 +105,8 @@ class TextInput extends React.Component {
                 index={index}
                 calling_context={this.props.calling_context}
                 label={label}
-              />,
-              <br key={Math.random()} />,
+              />
+              <br key={Math.random()} />
               <br key={Math.random()} />
             ])}
             <input type="hidden" name="socket-id" value={this.props.socketId} />

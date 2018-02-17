@@ -11,24 +11,18 @@ export function getInputComponentById(
   socketId,
   sendAddr
 ) {
-
-  let fin=[];
+  
+  let fin = [];
   fin.push(
-  
-      <TypeInput
-        prop={props}
-        calling_context={calling_context}
-        socketId={socketId}
-        sendAddr={sendAddr}
-      />
-
-    );
-  
-  return (
-    <div>
-      {fin}
-    </div>
+    <TypeInput
+      prop={props}
+      calling_context={calling_context}
+      socketId={socketId}
+      sendAddr={sendAddr}
+    />
   );
+
+  return <div>{fin}</div>;
 }
 
 export function getAllInputComponentsForShowcase(data) {
