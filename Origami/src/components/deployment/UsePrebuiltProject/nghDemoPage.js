@@ -120,8 +120,7 @@ class NGHDemoPage extends React.Component {
           this.state.demo_creator_id,
           this.props.params.repoId,
           "input"
-        ).then(data => {
-          let k=JSON.parse(data);       
+        ).then(data => {       
           if (Object.keys(JSON.parse(data)).length) {
             this.setState({ inputModel: JSON.parse(data)[0] }, () => {
               let val = 0;
@@ -140,8 +139,7 @@ class NGHDemoPage extends React.Component {
           this.state.demo_creator_id,
           this.props.params.repoId,
           "output"
-        ).then(data => {
-          let k=JSON.parse(data);      
+        ).then(data => {    
           if (Object.keys(JSON.parse(data)).length) {
             this.setState({ outputModel: JSON.parse(data)[0] });
           }
