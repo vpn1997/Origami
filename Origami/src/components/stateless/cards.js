@@ -9,8 +9,6 @@ const CustomCard = (
     width,
     centeredParent,
     centeredSegment,
-    displayData,
-    buttonData,
     selected,
     context
   }
@@ -45,8 +43,6 @@ CustomCard.propTypes = {
   context: PropTypes.string.isRequired,
   centeredParent: PropTypes.bool,
   centeredSegment: PropTypes.bool,
-  displayData: PropTypes.array,
-  buttonData: PropTypes.array,
   selected: PropTypes.bool
  
 };
