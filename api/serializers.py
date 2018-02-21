@@ -12,7 +12,6 @@ class DemoSerializer(serializers.ModelSerializer):
 
 class InputComponentSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField(read_only=False)
-
     class Meta:
         model = InputComponent
         fields = ('base_component_id', 'user_id', 'props')

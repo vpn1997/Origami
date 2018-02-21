@@ -11,7 +11,8 @@ export function getInputComponentById(
   socketId,
   sendAddr
 ) {
-  
+  console.log("index page pr kuch hua");
+  console.log(id,props,calling_context,socketId,sendAddr);
   let fin = [];
   fin.push(
     <TypeInput

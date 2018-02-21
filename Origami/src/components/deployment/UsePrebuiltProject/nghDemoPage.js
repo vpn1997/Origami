@@ -35,7 +35,8 @@ class NGHDemoPage extends React.Component {
       imageInputCount: 0,
       files: [],
       index: 0,
-      resetBorder: false
+      resetBorder: false,
+      value:''
     };
     this.socket = this.context.socket;
     this.socketId = this.context.socketId;
@@ -168,9 +169,13 @@ class NGHDemoPage extends React.Component {
     );
     let formData = new FormData();
     formData.set("socket-id", this.socketId);
+    formData.set("interactive",this.state.value);
+    console.log("props in ngh=")
+    console.log(this.props)
     this.state.files.map(file => {
       formData.set(file.newfilename, file.newfile, file.newfilename);
     });
+
     this.setState({ files: [] }, () => {
       this.setState({ index: 0 });
     });
@@ -272,6 +277,16 @@ class NGHDemoPage extends React.Component {
         this.updateFormData(file, `input-image-${this.state.index}`);
       }
     });
+  }
+
+    handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+    handleOk(event) {
+      console.log(this.state.value);
+      this.sendRequest(`http://${this.state.demoModel.token.split(":")[1]}:${this.state.demoModel.token.split(":")[4]}/event`);
+    event.preventDefault();
   }
 
   render() {
@@ -387,6 +402,35 @@ class NGHDemoPage extends React.Component {
                   style={{ visibility: "hidden" }}
                 >
                   <div className="bar" />
+                </div>
+
+
+                  <div className="row">
+          <div className="ui relaxed stackable grid container">
+            <div className="column row">
+
+              <div className="center aligned column">
+                <h2 className="ui row">
+                  Interactive shell
+                </h2>
+
+                <form onSubmit={this.handleOk.bind(this)}>
+                    <div className="form-group">
+                      <label for="usr">Label:</label>
+                      <br />
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={this.state.value}
+                        onChange={this.handleChange.bind(this)}
+                      />
+                       <input type="submit" value="Submit" />
+                    </div>
+                  </form>
+
+                    </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="row" id="output-div">

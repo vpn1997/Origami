@@ -194,11 +194,7 @@ def custom_component_controller(request, type_req, user_id, demoid):
     elif type_req == "output":
         model = OutputComponent
         serializer = OutputComponentSerializer
-    else:
-        return Response(
-            "Invalid URL",
-            status=response_status.HTTP_404_NOT_FOUND
-        )
+
 
     if request.method == "POST":
         body = request.data
@@ -208,10 +204,13 @@ def custom_component_controller(request, type_req, user_id, demoid):
         props = []
         for prop in body["props"]:
             if prop:
-                props.append({"id": prop["id"],
-                    "label": prop["label"]})
+                props.append({"id": prop["id"].encode(
+                    "ascii", "ignore").decode('utf-8'),
+                    "label": prop["label"].encode(
+                        "ascii", "ignore").decode('utf-8')})
             else:
                 props.append({})
+
         user_id = body["user_id"]
         component = model.objects.create(
             demo=demo, base_component_id=base_comp_id,
@@ -261,8 +260,10 @@ def custom_component_controller(request, type_req, user_id, demoid):
             props = []
             for prop in body["props"]:
                 if prop:
-                    props.append({"id": prop["id"],
-                        "label": prop["label"]})
+                    props.append({"id": prop["id"].encode(
+                        "ascii", "ignore").decode('utf-8'),
+                        "label": prop["label"].encode(
+                        "ascii", "ignore").decode('utf-8')})
                 else:
                     props.append({})
             component.props = json.dumps(props)
@@ -308,7 +309,7 @@ def custom_demo_controller(request, user_id, id):
             try:
                 demo = Demo.objects.get(id=id, user_id=user_id)
             except Exception:
-                return Response({"text": "Not Found"})
+                 return Response({"text": "Not Found"})
             serialize = DemoSerializer(demo).data
             try:
                 sample_inputs = SampleInput.objects.filter(demo=demo)
