@@ -15,14 +15,10 @@ const CustomCard = (
 ) => {
   const parentClass = `${width ? width : "four"} wide stackable ${centeredParent ? "" : "centered"} column`;
   const cardClass = `ui card blue segment ${centeredSegment ? "centered" : ""}`;
-  const headerToPut = selected ? `${header} - (In Use)` : header;
+  const headerToPut = header;
   return (
     <div className={parentClass} >
       <div className={cardClass} >
-        {selected &&
-          <div className="ui blue right corner label" >
-            <h1>*</h1>
-          </div>}
         <div className="content" style={{ backgroundColor: cyan100 }}>
           <div className="header">{headerToPut}</div>
         </div>
