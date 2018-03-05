@@ -5,6 +5,7 @@ import LinearProgress from "material-ui/LinearProgress";
 
 const TextOutput = ({ headers, calling_context, data }) => {
   return (
+  <div className="ui centered center aligned grid">
     <div
       key={Math.random()}
       className="six wide stackable stretched grid container origami-demo-output-components"
@@ -19,6 +20,7 @@ const TextOutput = ({ headers, calling_context, data }) => {
         <br key={Math.random()} />
         <br key={Math.random()} />
     </div>
+  </div>
   );
 };
 

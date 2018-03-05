@@ -37,8 +37,6 @@ class singleOutput extends React.Component {
   }
 
   render() {
-    console.log("props in pie");
-    console.log(this.props);
     const height=(this.props.calling_context=="demo2"?180:400);
     return (
       <div

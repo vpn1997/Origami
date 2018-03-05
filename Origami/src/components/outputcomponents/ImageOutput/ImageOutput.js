@@ -4,6 +4,7 @@ import SingleOutput from "./SingleOutput";
 
 const ImageOutput = ({ headers, calling_context, data }) => {
   return (
+  <div className="ui centered center aligned grid">
     <div
       key={Math.random()}
       className="six wide stackable stretched grid container origami-demo-output-components"
@@ -19,6 +20,8 @@ const ImageOutput = ({ headers, calling_context, data }) => {
         <br key={Math.random()} />
     
     </div>
+  </div>
+
   );
 };
 

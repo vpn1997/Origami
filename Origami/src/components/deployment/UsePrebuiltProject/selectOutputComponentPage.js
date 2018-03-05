@@ -37,8 +37,8 @@ const SortableList = SortableContainer(({ items }) => {
   return (
     <div
       style={{
-        width: '900px',
-        height: '400px',
+        width: '69vw',
+        height: '63vh',
         margin: '0 auto',
         overflowY: 'scroll',
         backgroundColor: '#f3f3f3',
@@ -242,7 +242,7 @@ class SelectOutputComponentPage extends React.Component {
         <div key={i}   >     
         {getOutputComponentById(id,le,"demo2",data)}
           
-          <div style={{marginLeft: '40%',width: '50%'}}>
+          <div style={{marginLeft: '30%',width: '40%'}}>
           <button  onClick={this.onDelete.bind(this,{i})}   type="button" className="btn btn-primary">Delete</button>
           <button  type="button" onClick={this.showModal.bind(this,{i})} className="btn btn-primary" style={{float:'right'}}>Label</button>
            </div>
@@ -377,24 +377,19 @@ class SelectOutputComponentPage extends React.Component {
   render() {
     document.body.scrollTop = (document.documentElement.scrollTop = 0);
     const myScrollbar = {
-      width: '900px',
-      height: '450px',
-      backgroundColor: 'grey'
+      width: '69vw',
+      height: '63vh',
+      backgroundColor: 'grey' 
     };
         const fix={
       position:'fixed'
     };
-        const styles = {
-            largeIcon: {
-              width: 60,
-              height: 60,
-            },  
-          };
 
      const but={
        position: 'absolute',
-        bottom: 5,
-        right: 125
+        bottom: "9%",
+        right:  "15%",
+  
      }
 
 
@@ -438,8 +433,8 @@ class SelectOutputComponentPage extends React.Component {
               className="fifteen wide column stretched stackable centered row"
             >
               <div
-                className="ui three padded column stackable grid"
-                style={{ marginLeft: "3%", minHeight: "90vh" }}
+                className="ui two padded column stackable grid"
+                style={{marginLeft:"2%", minHeight: "100vh" }}
               >
                 {getAllOutputComponentsForShowcase({
                   demoModel: this.props.nonghDemoModel,
@@ -465,7 +460,7 @@ class SelectOutputComponentPage extends React.Component {
                         items={this.state.Rows}
                         onSortEnd={this.onSortEnd.bind(this)}
                         lockToContainerEdges={true}
-                        lockOffset="95px"
+                        lockOffset="11%"
                       />
                     )}
                     <Modal
@@ -487,21 +482,20 @@ class SelectOutputComponentPage extends React.Component {
                         </div>
                       </form>
                     </Modal>
+                    <div style={but}>
+                      <RaisedButton
+                        label="Submit"
+                        primary={true}
+                        onClick={this.onSubmit.bind(this)}
+                      />
+                    </div>
                   </div>
                 </Droppable>
               </div>
             </div>
           </div>
         </div>
-        <div style={but}>
-          <RaisedButton
-            label="Submit"
-            primary={true}
-            onClick={this.onSubmit.bind(this)}
-          />
-        </div>
-        <br />
-        <br />
+
         
         <div
           className="ui fluid centered row"

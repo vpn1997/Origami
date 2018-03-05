@@ -36,8 +36,8 @@ const SortableList = SortableContainer(({ items }) => {
   return (
     <div
       style={{
-        width: '900px',
-        height: '400px',
+        width: '69vw',
+        height: '63vh',
         margin: '0 auto',
         overflowY: 'scroll',
         backgroundColor: '#f3f3f3',
@@ -190,8 +190,7 @@ class SelectInputComponentPage extends React.Component {
             socketId=""
             sendAddr=""
           />
-          <br />
-          <div style={{ margin: 'auto', width: '50%' }}>
+          <div style={{marginLeft: '30%',width: '40%' }}>
             <button
               onClick={this.onDelete.bind(this, { i })}
               type="button"
@@ -295,16 +294,16 @@ class SelectInputComponentPage extends React.Component {
   render() {
     document.body.scrollTop = (document.documentElement.scrollTop = 0);
       const myScrollbar = {
-      width: '900px',
-      height: '400px',
+      width: '69vw',
+      height: '63vh',
       backgroundColor: 'grey'
     };
 
 
       const but={
      position: 'absolute',
-      bottom: 5,
-      right: 125
+      bottom: "12%",
+      right: "15%"
    };
 
   
@@ -375,7 +374,7 @@ class SelectInputComponentPage extends React.Component {
                           items={this.state.Rows}
                           onSortEnd={this.onSortEnd.bind(this)}
                           lockToContainerEdges={true}
-                          lockOffset="60px"
+                          lockOffset="15%"
                         />;
                         <Modal
                           title="Input Label"
@@ -396,6 +395,13 @@ class SelectInputComponentPage extends React.Component {
                             </div>
                           </form>
                         </Modal>
+                        <div style={but}>
+                          <RaisedButton
+                            label="Submit"
+                            primary={true}
+                            onClick={this.onSubmit.bind(this)}
+                          />
+                         </div>
                       </div>
                     )}
                   </div>
@@ -404,14 +410,6 @@ class SelectInputComponentPage extends React.Component {
             </div>
           </div>
         </div>
-        <div style={but}>
-          <RaisedButton
-            label="Submit"
-            primary={true}
-            onClick={this.onSubmit.bind(this)}
-          />
-        </div>
-      
         <div
           className="ui fluid centered row"
           style={{

@@ -5,6 +5,7 @@ import SingleOutput from "./SingleOutput";
 const PieChartOutput = ({ headers, calling_context, data }) => {
 
   return (
+  <div className="ui centered center aligned grid">
     <div
       key={Math.random()}
       className="six wide stackable stretched grid container"
@@ -25,6 +26,7 @@ const PieChartOutput = ({ headers, calling_context, data }) => {
       <br key={Math.random()} />
      
     </div>
+  </div>
   );
 };
 
