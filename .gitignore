@@ -45,5 +45,8 @@ venv/
 # env setup
 origami.env
 
+#config 
+Origami/outCalls/config.js
+
 # package-lock.json as we use yarn for dependency management
 package-lock.json
