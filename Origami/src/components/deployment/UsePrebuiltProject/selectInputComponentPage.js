@@ -23,34 +23,14 @@ import {
 } from 'react-sortable-hoc';
 import TypeInput from "../../inputcomponents/BaseInputComponent/TypeInput";
 import { Modal, Button } from 'antd';
-
+import '../../../../../node_modules/react-grid-layout/css/styles.css';
+var ReactGridLayout = require('react-grid-layout');
 toastr.options.closeButton = true;
 
 
-const SortableItem = SortableElement(({ value }) => (
-  <li style={{ listStyleType: 'none' }}>{value}</li>
-));
 
 
-const SortableList = SortableContainer(({ items }) => {
-  return (
-    <div
-      style={{
-        width: '69vw',
-        height: '63vh',
-        margin: '0 auto',
-        overflowY: 'scroll',
-        backgroundColor: '#f3f3f3',
-        border: '1px solid #EFEFEF',
-        borderRadius: 3,
-      }}
-    >
-      {items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value} />
-      ))}
-    </div>
-  );
-});
+
 
 class SelectInputComponentPage extends React.Component {
   constructor(props, context) {
@@ -81,19 +61,7 @@ class SelectInputComponentPage extends React.Component {
   }
 
 
-  onSortEnd({ oldIndex, newIndex }) {
-    var old = this.state.array;
-    var lab = this.state.label;
-    var temp = old[oldIndex];
-    old[oldIndex] = old[newIndex];
-    old[newIndex] = temp;
 
-    var temp2 = lab[oldIndex];
-    lab[oldIndex] = lab[newIndex];
-    lab[newIndex] = temp2;
-
-    this.helper(old, lab);
-  }
 
   componentWillMount() {
 
@@ -182,6 +150,20 @@ class SelectInputComponentPage extends React.Component {
       tem['label'] = lab[i] ? lab[i] : '';
       prp.push(tem);
 
+      let temp=(
+        <div key={i}>
+          <TypeInput
+            prop={prp}
+            calling_context="demo2"
+            socketId=""
+            sendAddr=""
+          />
+
+        </div>
+
+        );
+
+  
       row.push(
         <div key={i}>
           <TypeInput
@@ -190,26 +172,7 @@ class SelectInputComponentPage extends React.Component {
             socketId=""
             sendAddr=""
           />
-          <div style={{marginLeft: '30%',width: '40%' }}>
-            <button
-              onClick={this.onDelete.bind(this, { i })}
-              type="button"
-              className="btn btn-primary"
-            >
-              Delete
-            </button>
-            <button
-              type="button"
-              onClick={this.showModal.bind(this, { i })}
-              className="btn btn-primary"
-              style={{ float: 'right' }}
-            >
-              Label
-            </button>
-          </div>
 
-          <br />
-          <br />
         </div>
       );
     }
@@ -294,8 +257,9 @@ class SelectInputComponentPage extends React.Component {
   render() {
     document.body.scrollTop = (document.documentElement.scrollTop = 0);
       const myScrollbar = {
-      width: '69vw',
-      height: '63vh',
+      minWidth: '71vw',
+      minHeight:'63vh',
+      overflow: 'scroll',
       backgroundColor: 'grey'
     };
 
@@ -307,6 +271,7 @@ class SelectInputComponentPage extends React.Component {
    };
 
   
+   const rows=this.state.rows
 
     
     return (
@@ -370,12 +335,21 @@ class SelectInputComponentPage extends React.Component {
 
                     {this.state.Rows.length > 0 && (
                       <div>
-                        <SortableList
-                          items={this.state.Rows}
-                          onSortEnd={this.onSortEnd.bind(this)}
-                          lockToContainerEdges={true}
-                          lockOffset="15%"
-                        />;
+                    <ReactGridLayout 
+                   cols={12} rowHeight={70} className="layout" width={1000}
+                  verticalCompact={false}
+
+                  onLayoutChange={this.onLayoutChange}
+                    
+                   >
+                           {this.state.Rows.map((value,index)=>
+                          <div key={index} data-grid={{x: 4, y:0+index*3, w:2 , h: 2}}  >
+                          <li style={{ listStyleType: 'none' }}>{value}</li>
+                          </div>
+                          )}
+                    
+
+                      </ReactGridLayout>
                         <Modal
                           title="Input Label"
                           visible={this.state.visible}

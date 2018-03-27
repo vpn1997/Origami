@@ -4,4 +4,7 @@ const appConfig = {
   DROPBOX_API_KEY: "API_KEY"
 };
 
+console.log("process.env.HOST = ");
+console.log(process.env.HOST);
+
 module.exports = appConfig;
