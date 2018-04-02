@@ -13,6 +13,8 @@ export function getInputComponentById(
 ) {
   
   let fin = [];
+  console.log("props =");
+  console.log(props);
   fin.push(
     <TypeInput
       prop={props}

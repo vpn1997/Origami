@@ -33,11 +33,11 @@ const singleInput = props => {
       }
     });
   }
-  const cl1=(props.calling_context=="demo2"?null:"ui container grid origami-demo-input-image-component");
+  const cl1=null;
   const cl2="centered center aligned stretched row origami-demo-input-image-label-container";
   const cl3="ui blue segment origami-demo-input-image-label";
-  const height=(props.calling_context=="demo2"?"50%":"100%");
-  const width=(props.calling_context=="demo2"?"50%":"75%");
+  const height="50%";
+  const width="50%";
   return (
 
     <div className={cl1} style={{width:'fit-content'}}>

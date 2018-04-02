@@ -24,12 +24,13 @@ import {
 import TypeInput from "../../inputcomponents/BaseInputComponent/TypeInput";
 import { Modal, Button } from 'antd';
 import '../../../../../node_modules/react-grid-layout/css/styles.css';
-var ReactGridLayout = require('react-grid-layout');
+
 toastr.options.closeButton = true;
 
 
-
-
+import { Responsive, WidthProvider } from 'react-grid-layout';
+import GridLayout from 'react-grid-layout';
+const ResponsiveGridLayout = WidthProvider(Responsive);
 
 
 class SelectInputComponentPage extends React.Component {
@@ -45,7 +46,8 @@ class SelectInputComponentPage extends React.Component {
       current:0,
       value:"",
       visible: false,
-      label:[]
+      label:[],
+      layout:[]
     };
 
     this.id = props['params'].repoId;
@@ -85,6 +87,16 @@ class SelectInputComponentPage extends React.Component {
           let k = dataToSeed['props'];
           let net = [];
           let lab = [];
+          let ley = [];
+
+          console.log("layout = ==");
+          for (var i = 0; i <k.length; i++) {
+            if("layout" in k[i])
+            ley.push(k[i]["layout"]);
+          }
+          
+
+          console.log(ley)
           Object.keys(k).forEach(function(key, index) {
             if (k[key].id == 1) {
               net.push('Text Input');
@@ -96,7 +108,7 @@ class SelectInputComponentPage extends React.Component {
           });
 
           this.helper(net, lab);
-          this.setState({ inputComponentDemoModel: dataToSeed });
+          this.setState({ inputComponentDemoModel: dataToSeed,layout:ley });
         }
       })
       .then(() => {
@@ -110,6 +122,24 @@ class SelectInputComponentPage extends React.Component {
           }
         });
       });
+
+  }
+
+  getHeight(){
+
+    let ley = this.state.layout;
+    let mx=0
+    if(ley.length>0)
+    {
+    for (var i = 0; i < ley.length; i++) {
+      if(ley[i]["x"]==2)
+      {
+      mx=Math.max(ley[i]["y"],mx)
+    }
+    }
+  }
+
+    return mx>0?mx+8:mx
 
   }
 
@@ -149,20 +179,6 @@ class SelectInputComponentPage extends React.Component {
       tem['id'] = k == 'Text Input' ? 1 : 3;
       tem['label'] = lab[i] ? lab[i] : '';
       prp.push(tem);
-
-      let temp=(
-        <div key={i}>
-          <TypeInput
-            prop={prp}
-            calling_context="demo2"
-            socketId=""
-            sendAddr=""
-          />
-
-        </div>
-
-        );
-
   
       row.push(
         <div key={i}>
@@ -187,15 +203,30 @@ class SelectInputComponentPage extends React.Component {
 
   onDelete(data)
   {
-    var index = data['i'];
+    console.log("delete aaya aaya");
+    console.log(data);
+    var index = data['index'];
     var arrayvar = this.state.array.slice();
     var lab = this.state.label;
+    var ley =this.state.layout;
 
     if (index > -1) {
       arrayvar.splice(index, 1);
       lab.splice(index, 1);
+      console.log("initial layout =");
+      console.log(ley.length);
+      console.log(ley[0]);
+      console.log(ley[1]);
+     
 
+      console.log("after layout =");
+      for (var i = 0; i < ley.length; i++) {
+        ley[i]["i"]=i.toString()
+      }
+      console.log(ley);
+      this.setState({layout:ley});
       this.helper(arrayvar, lab);
+      
     }
     
   }
@@ -208,6 +239,17 @@ class SelectInputComponentPage extends React.Component {
     let d = data['ll'] ? data['ll'] : data['lr'];
     arrayvar.push(d);
     this.helper(arrayvar, lab);
+    let ley =this.state.layout;
+    console.log("ley =");
+    console.log(ley);
+    let tmp=[];
+    tmp["x"]=2;
+    tmp["y"]=this.getHeight();
+    tmp["w"]=2;
+    tmp["h"]=3;
+    ley.push(tmp);
+    this.setState({layout:ley})
+
   }
 
 
@@ -215,10 +257,12 @@ class SelectInputComponentPage extends React.Component {
     let lab = this.state.label;
     let k = [];
     let l = this.state.array;
+    let layout=this.state.layout;
     for (var i = 0; i < l.length; i++) {
       let tem = {};
       tem['id'] = l[i] == 'Text Input' ? 1 : 3;
       tem['label'] = lab[i] ? lab[i] : '';
+      tem['layout']=layout[i];
       k.push(tem);
     }
 
@@ -242,7 +286,10 @@ class SelectInputComponentPage extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (
       this.state.inputComponentDemoModel !== nextProps.inputComponentDemoModel
-    ) {
+    )
+
+
+     {
       this.setState({
         inputComponentDemoModel: nextProps.inputComponentDemoModel
       });
@@ -251,6 +298,10 @@ class SelectInputComponentPage extends React.Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
+  }
+
+  onLayoutChange(prop){
+    this.setState({layout:prop});
   }
  
 
@@ -271,7 +322,9 @@ class SelectInputComponentPage extends React.Component {
    };
 
   
-   const rows=this.state.rows
+   let layout=this.state.layout;
+   console.log("layout  ");
+   console.log(layout);
 
     
     return (
@@ -314,7 +367,7 @@ class SelectInputComponentPage extends React.Component {
             >
               <div
                 className="ui three padded column stackable grid"
-                style={{ marginLeft: "3%", minHeight: "90vh" }}
+                style={{ marginLeft: "2%"}}
               >
                 {getAllInputComponentsForShowcase({
                   demoModel: this.props.nonghDemoModel,
@@ -326,30 +379,56 @@ class SelectInputComponentPage extends React.Component {
                   selected: this.state.inputComponentDemoModel.base_component_id
                 }).map((showcasecard, index) => showcasecard)}
 
-      
+        <br/>
+        <br/>
         <Droppable types={['ll', 'lr']} onDrop={this.onDrop.bind(this)}>
+
+        <br/>
+        <br/>
+       
                   <div style={myScrollbar}>
                     <div style={{ width: 'fit-content', margin: 'auto' }}>
                       <b style={{ fontSize: 'large' }}>Drag N Drop</b>
                     </div>
 
+
                     {this.state.Rows.length > 0 && (
-                      <div>
-                    <ReactGridLayout 
-                   cols={12} rowHeight={70} className="layout" width={1000}
-                  verticalCompact={false}
-
-                  onLayoutChange={this.onLayoutChange}
-                    
+                    <GridLayout
+                    rowHeight={50} className="layout" 
+                    col={10}
+                    width={2000}
+                   verticalCompact={false}
+                   preventCollision={true}
+                  onLayoutChange={this.onLayoutChange.bind(this)}
+                  layout={layout}
+                        style={{
+                  width: '71vw',
+                  height: '64vh',
+                  margin: '0 auto',
+                  overflowY: 'scroll',
+                  backgroundColor: '#f3f3f3',
+                  border: '1px solid #EFEFEF',
+                  borderRadius: 3,
+                }}
                    >
-                           {this.state.Rows.map((value,index)=>
-                          <div key={index} data-grid={{x: 4, y:0+index*3, w:2 , h: 2}}  >
-                          <li style={{ listStyleType: 'none' }}>{value}</li>
-                          </div>
-                          )}
-                    
+                   {this.state.Rows.map((value,index)=>
 
-                      </ReactGridLayout>
+                  <div key={index} data-grid={layout[index]}  >
+                  <li style={{ listStyleType: 'none' }}>{value}</li>
+                            <button
+                            onClick={this.onDelete.bind(this, { index })}
+                            type="button"
+                            className="btn btn-primary"
+                          >
+                           Delete
+                          </button>
+                  </div>
+                  )}
+
+
+                      </GridLayout>
+                      )}
+                    
                         <Modal
                           title="Input Label"
                           visible={this.state.visible}
@@ -376,9 +455,11 @@ class SelectInputComponentPage extends React.Component {
                             onClick={this.onSubmit.bind(this)}
                           />
                          </div>
-                      </div>
-                    )}
+
+                    
                   </div>
+                  <br/>
+        <br/>
                 </Droppable>
               </div>
             </div>

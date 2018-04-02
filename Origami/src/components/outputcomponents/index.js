@@ -14,6 +14,8 @@ import BarGraphOutputShowCaseCard from "./BarGraphOutput/BarGraphOutputShowcaseC
 import ScatterGraphOutputShowCaseCard from "./ScatterGraphOutput/ScatterGraphOutputShowcaseCard";
 import PieChartOutputShowCaseCard from "./PieChartOutput/PieChartOutputShowcaseCard";
 import AreaGraphOutputShowCaseCard from "./AreaGraphOutput/AreaGraphOutputShowcaseCard";
+import GridLayout from 'react-grid-layout';
+import '../../../../node_modules/react-grid-layout/css/styles.css';
 
 export function getOutputComponentById(id, props, calling_context, data) {
   let headers = [];
@@ -22,11 +24,14 @@ export function getOutputComponentById(id, props, calling_context, data) {
   });
 
   let fin=[];
+  let layout=[];
   for(var i=0;i<props.length;i++)
   {
     let lab={};
     lab["id"]=props[i].id;
-    lab["label"]=props[i].label;     
+    lab["label"]=props[i].label; 
+    if("layout" in props[i])
+    layout.push(props[i].layout);     
 
   switch (lab["id"]) {
     case 1:
@@ -87,8 +92,39 @@ export function getOutputComponentById(id, props, calling_context, data) {
       return <div>Null</div>;
   }
 }
-
+if(calling_context == "demo2")
 return fin;
+else
+{
+let l=(
+              <GridLayout
+                    rowHeight={50} className="layout" 
+                    col={10}
+                    width={2000}
+                   verticalCompact={false}
+                   isDraggable={false}
+                   >
+
+                   
+              {fin.map((value,index)=>     
+                  <div key={index} data-grid={{x: layout[index]["x"], y:layout[index]["y"],
+                   w:layout[index]["w"] , h: layout[index]["h"]}} >
+
+                               <br /><br />
+            {value}
+                  </div>
+
+        )}
+              </GridLayout>
+
+
+
+  );
+
+return l;
+
+  
+}
 }
 
 export function getAllOutputComponentsForShowcase(data) {

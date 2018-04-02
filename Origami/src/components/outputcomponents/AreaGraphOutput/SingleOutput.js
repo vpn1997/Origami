@@ -30,7 +30,10 @@ class singleOutput extends React.Component {
   }
 
   showGraphFull() {
-    this.setState({ open: true });
+        let open=true
+    if(this.props.calling_context=="demo2")
+      open=false
+    this.setState({ open: open });
   }
 
   handleClose() {

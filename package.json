@@ -33,6 +33,7 @@
     "jquery": "^3.2.1",
     "load-script": "^1.0.0",
     "material-ui": "^0.20.0",
+    "material-ui-icons": "^1.0.0-beta.36",
     "material-ui-next": "npm:material-ui@next",
     "mkdirp": "^0.5.1",
     "mongoose": "^4.13.6",

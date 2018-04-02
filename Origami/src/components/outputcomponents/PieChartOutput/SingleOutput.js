@@ -29,7 +29,10 @@ class singleOutput extends React.Component {
   }
 
   showGraphFull() {
-    this.setState({ open: true });
+    let open=true
+    if(this.props.calling_context=="demo2")
+      open=false
+    this.setState({ open: open });
   }
 
   handleClose() {
@@ -43,7 +46,7 @@ class singleOutput extends React.Component {
         className="ui card centered"
         id={`output-text-${this.props.index}`}
         style={{ cursor: "pointer" }}
-        onClick={this.showGraphFull}
+        onClick={this.showGraphFull.bind(this)}
       >
         <div className="content">
           <div className="header">

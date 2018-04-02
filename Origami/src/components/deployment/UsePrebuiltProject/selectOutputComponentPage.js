@@ -29,29 +29,12 @@ import {getOutputComponentById} from "../../outputcomponents/index"
 toastr.options.closeButton = true;
 import { Modal, Button } from 'antd';
 
-const SortableItem = SortableElement(({ value }) => (
-  <li style={{ listStyleType: 'none' }}>{value}</li>
-));
+import { Responsive, WidthProvider } from 'react-grid-layout';
+import GridLayout from 'react-grid-layout';
+const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const SortableList = SortableContainer(({ items }) => {
-  return (
-    <div
-      style={{
-        width: '69vw',
-        height: '63vh',
-        margin: '0 auto',
-        overflowY: 'scroll',
-        backgroundColor: '#f3f3f3',
-        border: '1px solid #EFEFEF',
-        borderRadius: 3,
-      }}
-    >
-      {items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value} />
-      ))}
-    </div>
-  );
-});
+
+
 
 class SelectOutputComponentPage extends React.Component {
   constructor(props, context) {
@@ -65,7 +48,8 @@ class SelectOutputComponentPage extends React.Component {
       current:0,
       value:"",
       visible: false,
-      label:[]
+      label:[],
+      layout:[]
     };
 
     this.id=props["params"].repoId;
@@ -119,6 +103,14 @@ class SelectOutputComponentPage extends React.Component {
           let k=dataToSeed["props"];
           let net=[];
           let lab=[];
+          let ley = [];
+
+          console.log("layout = ==");
+          for (var i = 0; i <k.length; i++) {
+            if("layout" in k[i])
+            ley.push(k[i]["layout"]);
+          }
+
           Object.keys(k).forEach(function(key,index) {
           switch(k[key].id){
 
@@ -151,7 +143,7 @@ class SelectOutputComponentPage extends React.Component {
             lab[index]=k[key]["label"];
             });
           this.helper(net,lab);
-          this.setState({ outputComponentDemoModel: dataToSeed });
+          this.setState({ outputComponentDemoModel: dataToSeed,layout:ley});
         }
       })
       .then(() => {
@@ -166,6 +158,25 @@ class SelectOutputComponentPage extends React.Component {
         });
       });
   }
+
+  getHeight(){
+
+    let ley = this.state.layout;
+    let mx=0
+    if(ley.length>0)
+    {
+    for (var i = 0; i < ley.length; i++) {
+      if(ley[i]["x"]==2)
+      {
+      mx=Math.max(ley[i]["y"],mx)
+    }
+    }
+  }
+
+    return mx>0?mx+8:mx
+
+  }
+
 
   showModal(e){
     let lab=this.state.label;
@@ -238,16 +249,14 @@ class SelectOutputComponentPage extends React.Component {
       le.push(prp);
       var data=[];
       var id=this.base_component_id;
+
+      console.log("le data =");
+      console.log(le,data);
       row.push(
         <div key={i}   >     
         {getOutputComponentById(id,le,"demo2",data)}
           
-          <div style={{marginLeft: '30%',width: '40%'}}>
-          <button  onClick={this.onDelete.bind(this,{i})}   type="button" className="btn btn-primary">Delete</button>
-          <button  type="button" onClick={this.showModal.bind(this,{i})} className="btn btn-primary" style={{float:'right'}}>Label</button>
-           </div>
-           <br/>
-           <br/>
+
           </div>
           
          
@@ -258,12 +267,15 @@ class SelectOutputComponentPage extends React.Component {
 
     onDelete(data){
 
-    var index=data["i"];
+    var index=data["index"];
     var lab=this.state.label;
     var arrayvar = this.state.array.slice();
+    var ley =this.state.layout;
     if (index > -1) {
     arrayvar.splice(index, 1);
     lab.splice(index, 1);
+    ley.splice(index, 1);
+    this.setState({layout:ley});
     this.helper(arrayvar,lab);
     }
   }
@@ -298,6 +310,14 @@ class SelectOutputComponentPage extends React.Component {
     }
     arrayvar.push(d);
     lab.push("");
+    let ley =this.state.layout;
+        let tmp=[];
+    tmp["x"]=2;
+    tmp["y"]=this.getHeight();
+    tmp["w"]=2;
+    tmp["h"]=3;
+    ley.push(tmp);
+    this.setState({layout:ley})
     this.helper(arrayvar,lab);
   }
 
@@ -306,6 +326,7 @@ class SelectOutputComponentPage extends React.Component {
     let k=[]
     let l=this.state.array;
     let lab=this.state.label;
+    let layout=this.state.layout;
     for(var i=0;i<l.length;i++)
     {
       let tem={};
@@ -339,6 +360,7 @@ class SelectOutputComponentPage extends React.Component {
         }
       tem["id"]=t;
       tem["label"]=(lab[i]?lab[i]:"");
+      tem['layout']=layout[i];
       k.push(tem);
 
     }
@@ -373,16 +395,18 @@ class SelectOutputComponentPage extends React.Component {
     handleChange(event) {
     this.setState({value: event.target.value});
   }
+    onLayoutChange(prop){
+    this.setState({layout:prop});
+  }
+ 
 
   render() {
     document.body.scrollTop = (document.documentElement.scrollTop = 0);
-    const myScrollbar = {
-      width: '69vw',
-      height: '63vh',
-      backgroundColor: 'grey' 
-    };
-        const fix={
-      position:'fixed'
+     const myScrollbar = {
+      minWidth: '71vw',
+      minHeight:'63vh',
+      overflow: 'scroll',
+      backgroundColor: 'grey'
     };
 
      const but={
@@ -391,6 +415,7 @@ class SelectOutputComponentPage extends React.Component {
         right:  "15%",
   
      }
+     let layout=this.state.layout;
 
 
     return (
@@ -445,23 +470,58 @@ class SelectOutputComponentPage extends React.Component {
                   params: this.props.params,
                   selected: this.state.outputComponentDemoModel.base_component_id
                 }).map((showcasecard, index) => showcasecard)}
-
+                        <br/>
+        <br/>
                 <Droppable
                   types={['l1', 'l2', 'l3', 'l4', 'l5', 'l6']}
                   onDrop={this.onDrop.bind(this)}
                 >
+
+        <br/>
+        <br/>
+
+
                   <div style={myScrollbar}>
                     <div style={{ width: 'fit-content', margin: 'auto' }}>
                       <b style={{ fontSize: 'large' }}>Drag N Drop</b>
                     </div>
 
                     {this.state.Rows.length > 0 && (
-                      <SortableList
-                        items={this.state.Rows}
-                        onSortEnd={this.onSortEnd.bind(this)}
-                        lockToContainerEdges={true}
-                        lockOffset="11%"
-                      />
+                    <GridLayout
+                    rowHeight={50} className="layout" 
+                    col={10}
+                    width={2000}
+                   verticalCompact={false}
+                   preventCollision={true}
+                  onLayoutChange={this.onLayoutChange.bind(this)}
+                  layout={layout}
+                        style={{
+                  width: '71vw',
+                  height: '64vh',
+                  margin: '0 auto',
+                  overflowY: 'scroll',
+                  backgroundColor: '#f3f3f3',
+                  border: '1px solid #EFEFEF',
+                  borderRadius: 3,
+                }}
+                   >
+                                      {this.state.Rows.map((value,index)=>
+
+                  <div key={index} data-grid={layout[index]}  >
+                  <li style={{ listStyleType: 'none' }}>{value}</li>
+                            <button
+                            onClick={this.onDelete.bind(this, { index })}
+                            type="button"
+                            className="btn btn-primary"
+                          >
+                           Delete
+                          </button>
+                  </div>
+                  )}
+
+
+                      </GridLayout>
+
                     )}
                     <Modal
                       title="Input Label"
@@ -490,6 +550,8 @@ class SelectOutputComponentPage extends React.Component {
                       />
                     </div>
                   </div>
+                                    <br/>
+        <br/>
                 </Droppable>
               </div>
             </div>

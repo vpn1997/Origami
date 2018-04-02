@@ -209,7 +209,8 @@ def custom_component_controller(request, type_req, user_id, demoid):
         for prop in body["props"]:
             if prop:
                 props.append({"id": prop["id"],
-                    "label": prop["label"]})
+                    "label": prop["label"],
+                    "layout":prop["layout"]})
             else:
                 props.append({})
         user_id = body["user_id"]
@@ -259,10 +260,12 @@ def custom_component_controller(request, type_req, user_id, demoid):
             component = model.objects.get(demo=demo, user_id=user_id)
             component.base_component_id = body["base_component_id"]
             props = []
+            print("props = {} ").format(body["props"])
             for prop in body["props"]:
                 if prop:
                     props.append({"id": prop["id"],
-                        "label": prop["label"]})
+                        "label": prop["label"],
+                        "layout":prop["layout"]})
                 else:
                     props.append({})
             component.props = json.dumps(props)

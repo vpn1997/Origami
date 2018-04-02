@@ -4,6 +4,8 @@ import TextSingleInput from "../TextInput/TextSingleInput";
 import ImageSingleInput from "../ImageInput/ImageSingleInput";
 import RaisedButton from "material-ui/RaisedButton";
 import toastr from "toastr";
+import GridLayout from 'react-grid-layout';
+import '../../../../../node_modules/react-grid-layout/css/styles.css';
 
 class TypeInput extends React.Component {
   constructor(props) {
@@ -132,7 +134,9 @@ class TypeInput extends React.Component {
   render() {
     let fin = [];
     let k = this.props.prop;
+    let layout=[];
     for (var i = 0; i < k.length; i++) {
+      layout.push(k[i]["layout"])
       if (k[i].id == 1) {
         fin.push(
           <div key={i} style={{ marginTop: '60px' }}>
@@ -164,6 +168,11 @@ class TypeInput extends React.Component {
     }
 
     var but = null;
+             const myScrollbar = {
+      minWidth: '71vw',
+      minHeight:'63vh'
+
+    };
     if (this.props.calling_context == 'demo') {
       but = (
         <div className="ui row">
@@ -184,6 +193,8 @@ class TypeInput extends React.Component {
         </div>
       );
     }
+    if(this.props.calling_context == 'demo2')
+    {
     return (
       <div className="ui centered center aligned grid">
         <form id="send-text" className="six wide stackable stretched ui input">
@@ -194,9 +205,55 @@ class TypeInput extends React.Component {
           </div>
         </form>
           {but}
-
       </div>
     );
+  }
+  else
+  {
+
+    return (
+      <div className="ui centered center aligned grid">
+      <div style={myScrollbar}>
+
+   <form id="send-text" className="six wide stackable stretched ui input" style={myScrollbar}>
+              <GridLayout
+                    rowHeight={50} className="layout" 
+                    col={10}
+                    width={2000}
+                   verticalCompact={false}
+                   isDraggable={false}
+                   >
+
+                   
+              {fin.map((value,index)=>     
+                  <div key={index} data-grid={{x: layout[index]["x"], y:layout[index]["y"],
+                   w:layout[index]["w"] , h: layout[index]["h"]}} >
+
+          <div className="origami-demo-input-components" key={Math.random()}>
+            <br /><br />
+            {value}
+            
+          </div>
+
+        <br/>
+        <br/>
+        </div>
+        )}
+      
+        </GridLayout>
+        <input type="hidden" name="socket-id" value={this.props.socketId} />
+                  </form>
+               
+        </div> 
+         {but}     
+          
+      </div>
+    );
+
+
+
+
+  }
   }
 }
 
