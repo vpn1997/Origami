@@ -12,8 +12,11 @@
 
 - The aim of this project is to create a framework that can help people create a web based demo out of their machine learning code and share it. Others can test the model without going into the implementation details. Usually testing models by other people involves a lot of preparation and setup. This project aims to cut that down.
 
+This app is presently under active development and we welcome contributions. Please check out our [issues thread](https://github.com/Cloud-CV/Origami/issues) to find things to work on, or ping us on [Gitter](https://gitter.im/Cloud-CV/Origami).
 
-## Setting the environment variables
+## Getting Started
+
+### Setting the environment variables
 
 * `origami.env` stores all the environment variables necessary to run Origami.
 
