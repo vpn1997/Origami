@@ -1,7 +1,5 @@
 <p align="center"><img width="40%" height="15%" src="origami_logo.png" /></p></br>
 
-<p align="center"><img width="75%" height="15%" src="origami.png" /></p>
-
 [![Build Status](https://travis-ci.org/Cloud-CV/Origami.svg?branch=master)](https://travis-ci.org/Cloud-CV/cvfy-frontend.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/Cloud-CV/Origami/badge.svg?branch=master)](https://coveralls.io/github/Cloud-CV/Origami?branch=master)
 [![Dependency Status](https://david-dm.org/Cloud-CV/Origami.svg)](https://david-dm.org/Cloud-CV/cvfy-frontend)
@@ -11,6 +9,9 @@
 - Origami is an AI-as-a-service that allows researchers to easily convert their deep learning models into an online service that is widely accessible to everyone without the need to setup the infrastructure, resolve the dependencies, and build a web service around the deep learning model. By lowering the barrier to entry to latest AI algorithms, we provide developers, researchers and students the ability to access any model using a simple REST API call.
 
 - The aim of this project is to create a framework that can help people create a web based demo out of their machine learning code and share it. Others can test the model without going into the implementation details. Usually testing models by other people involves a lot of preparation and setup. This project aims to cut that down.
+
+
+<p align="center"><img width="80%" height="70%" src="origami.png" /></p>
 
 This app is presently under active development and we welcome contributions. Please check out our [issues thread](https://github.com/Cloud-CV/Origami/issues) to find things to work on, or ping us on [Gitter](https://gitter.im/Cloud-CV/Origami).
 
