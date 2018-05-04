@@ -1,4 +1,5 @@
 <p align="center"><img width="40%" height="15%" src="origami_logo.png" /></p></br>
+<p align="center"><img width="80%" height="70%" src="origami.png" /></p>
 
 [![Build Status](https://travis-ci.org/Cloud-CV/Origami.svg?branch=master)](https://travis-ci.org/Cloud-CV/cvfy-frontend.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/Cloud-CV/Origami/badge.svg?branch=master)](https://coveralls.io/github/Cloud-CV/Origami?branch=master)
@@ -10,8 +11,6 @@
 
 - The aim of this project is to create a framework that can help people create a web based demo out of their machine learning code and share it. Others can test the model without going into the implementation details. Usually testing models by other people involves a lot of preparation and setup. This project aims to cut that down.
 
-
-<p align="center"><img width="80%" height="70%" src="origami.png" /></p>
 
 This app is presently under active development and we welcome contributions. Please check out our [issues thread](https://github.com/Cloud-CV/Origami/issues) to find things to work on, or ping us on [Gitter](https://gitter.im/Cloud-CV/Origami).
 
