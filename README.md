@@ -1,5 +1,7 @@
 # Origami
-![shadow_image_101151](https://user-images.githubusercontent.com/17298412/39618496-9bf8573e-4fa1-11e8-8630-586baf758ef3.png)
+
+<p align="center"><img width="50%" height="10%" src="https://dexter1691.github.io/img/origami_banner.png " /></p>
+
 
 
 
