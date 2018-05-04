@@ -5,7 +5,7 @@
 [![devDependency Status](https://david-dm.org/Cloud-CV/Origami/dev-status.svg)](https://david-dm.org/Cloud-CV/cvfy-frontend#info=devDependencies)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-<p align="center"><img width="45%" height="15%" src="https://dexter1691.github.io/img/origami_banner.png" /></p>
+<p align="center"><img width="90%" height="10%" src="https://dexter1691.github.io/img/origami_banner.png" /></p>
 
 
 
