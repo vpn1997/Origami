@@ -1,6 +1,7 @@
 # Origami
+![shadow_image_101151](https://user-images.githubusercontent.com/17298412/39618496-9bf8573e-4fa1-11e8-8630-586baf758ef3.png)
 
-<p align="center"><img width="60%" height="10%" src="https://dexter1691.github.io/img/origami_banner.png" /></p>
+
 
 [![Build Status](https://travis-ci.org/Cloud-CV/Origami.svg?branch=master)](https://travis-ci.org/Cloud-CV/cvfy-frontend.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/Cloud-CV/Origami/badge.svg?branch=master)](https://coveralls.io/github/Cloud-CV/Origami?branch=master)
