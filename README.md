@@ -1,4 +1,4 @@
-# Origami
+<h1 align="center"> Origami </h1> <br>
 
 <p align="center"><img width="60%" height="10%" src="https://dexter1691.github.io/img/origami_banner.png" /></p>
 
