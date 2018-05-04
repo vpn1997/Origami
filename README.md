@@ -1,6 +1,6 @@
 # Origami
 
-<p align="center"><img width="45%" height="15%" src="origami.png" /></p>
+<p align="center"><img width="75%" height="15%" src="origami.png" /></p>
 
 [![Build Status](https://travis-ci.org/Cloud-CV/Origami.svg?branch=master)](https://travis-ci.org/Cloud-CV/cvfy-frontend.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/Cloud-CV/Origami/badge.svg?branch=master)](https://coveralls.io/github/Cloud-CV/Origami?branch=master)
@@ -14,7 +14,7 @@
 
 This app is presently under active development and we welcome contributions. Please check out our [issues thread](https://github.com/Cloud-CV/Origami/issues) to find things to work on, or ping us on [Gitter](https://gitter.im/Cloud-CV/Origami).
 
-## Getting Started
+# Getting Started
 
 ### Setting the environment variables
 
@@ -99,7 +99,7 @@ python manage.py migrate
 4. Go to [localhost:8000](http://localhost:8000/)
   Visit [Read the docs](http://cloudcv-origami.readthedocs.io/en/latest/) for further instructions on Getting started
 
-### Contributing to Origami
+## Contributing to Origami
 
 1. Make sure your run tests on your changes before you push the code using:
 	* `python manage.py test`
