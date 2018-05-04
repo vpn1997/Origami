@@ -1,4 +1,5 @@
-# Origami
+# 
+<p align="center"><img width="20%" height="15%" src="origami_logo.png" /></p></br>
 
 <p align="center"><img width="75%" height="15%" src="origami.png" /></p>
 
