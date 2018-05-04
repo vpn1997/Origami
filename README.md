@@ -17,7 +17,7 @@
 
 This app is presently under active development and we welcome contributions. Please check out our [issues thread](https://github.com/Cloud-CV/Origami/issues) to find things to work on, or ping us on [Gitter](https://gitter.im/Cloud-CV/Origami).
 
-# Getting Started
+## Installation Instructions
 
 ### Setting the environment variables
 
