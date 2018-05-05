@@ -1,4 +1,4 @@
-<p align="center"><img width="30%" height="15%" src="origami_logo.png" /></p></br>
+# Origami
 <p align="center"><img width="80%" height="60%" src="origami.png" /></p>
 <h4 align="center">Artificial Intelligence as a Service</h4>
 
