@@ -187,75 +187,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <Layout style={{ background: "#FEFEFE" }}>
-        {this.props.login ? (
-          <Header id="layout-header">
-            <Row>
-              <Col span={3} offset={1}>
-                <h2 id="logo-title">Origami</h2>
-              </Col>
-              <Col span={12} offset={3}>
-                <Input.Search
-                  id="search"
-                  placeholder="Search for demos, users"
-                  onSearch={value => this.findDemo(value)}
-                />
-              </Col>
-              <Col span={3} offset={0}>
-                <Col span={3} offset={0}>
-                  <Select
-                    defaultValue="demo"
-                    style={{ width: 85 }}
-                    onChange={value => this.setState({ searchBy: value })}
-                  >
-                    <Option value="demo">demo</Option>
-                    <Option value="user">user</Option>
-                  </Select>
-                </Col>
-              </Col>
-            </Row>
-          </Header>
-        ) : (
-          <Header id="layout-header-no-login">
-            <Row>
-              <Col span={3} offset={1}>
-                <h2 id="logo">
-                  <img src="/static/img/origami.png" width="180" />
-                </h2>
-              </Col>
-              <Col span={9} offset={1}>
-                <Input.Search
-                  id="search"
-                  placeholder="Search for demos, users"
-                  onSearch={value => this.findDemo(value)}
-                />
-              </Col>
-              <Col span={3} offset={0}>
-                <Col span={3} offset={0}>
-                  <Select
-                    defaultValue="demo"
-                    style={{ width: 85 }}
-                    onChange={value => this.setState({ searchBy: value })}
-                  >
-                    <Option value="demo">demo</Option>
-                    <Option value="user">user</Option>
-                  </Select>
-                </Col>
-              </Col>
-              <Col span={6} offset={1}>
-                <Menu
-                  mode="horizontal"
-                  defaultSelectedKeys={["1"]}
-                  style={{ lineHeight: "64px" }}
-                  onClick={this.handleClick}
-                >
-                  <Menu.Item key="1">Home</Menu.Item>
-                  <Menu.Item key="2">Login</Menu.Item>
-                  <Menu.Item key="3">Docs</Menu.Item>
-                </Menu>
-              </Col>
-            </Row>
-          </Header>
-        )}
+
         <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
           <div
             style={{ padding: 12, background: "#FEFEFE", textAlign: "center" }}
@@ -334,18 +266,7 @@ class HomePage extends React.Component {
             )}
           </div>
         </Content>
-        <Footer
-          style={{
-            textAlign: "center",
-            background: "#fefefe",
-            color: "#455A64",
-            fontSize: "14px",
-            boxShadow: "0px -2px 5px #E0E0E0"
-          }}
-        >
-          <strong>Origami</strong> - Created by{" "}
-          <a href="http://cloudcv.org/">Team CloudCV</a>
-        </Footer>
+
         <SocialDialog
           shareModalOpen={this.state.shareModalOpen}
           handleShareModal={this.handleShareModal.bind(this)}

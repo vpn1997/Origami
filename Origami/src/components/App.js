@@ -18,6 +18,10 @@ import { Layout, Menu, Icon, Button, Card, Row, Col, Input } from "antd";
 import * as rootApi from "../api/CommonLocal/rootSettingsApi";
 import { ORIGAMI_READ_THE_DOCS } from "../constants";
 import "./index.css";
+import '@coreui/icons/css/coreui-icons.min.css';
+import 'flag-icon-css/css/flag-icon.min.css';
+
+import 'simple-line-icons/css/simple-line-icons.css';
 
 const { Header, Content, Footer, Sider } = Layout;
 

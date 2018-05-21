@@ -33,8 +33,8 @@ const config = {
       },
       { test: /jquery\.js$/, loader: "expose-loader?jQuery!expose-loader?$" },
       {
-        test: /(\.css)$/,
-        use: ["style-loader", "css-loader"]
+        test: /\.(s*)css$/,
+        use: ['style-loader','css-loader', 'sass-loader']
       },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
       { test: /\.(woff|woff2)$/, loader: "url-loader?prefix=font/&limit=5000" },
