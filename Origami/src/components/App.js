@@ -20,7 +20,6 @@ import { ORIGAMI_READ_THE_DOCS } from "../constants";
 import "./index.css";
 import '@coreui/icons/css/coreui-icons.min.css';
 import 'flag-icon-css/css/flag-icon.min.css';
-
 import 'simple-line-icons/css/simple-line-icons.css';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -72,9 +71,15 @@ class App extends React.Component {
     } else {
       this.setState({ displayLogin: "" });
     }
+
+
+
+
     rootApi
       .checkRootSettings()
       .then(data => {
+        console.log("data =");
+        console.log(data);
         if (
           window.location.pathname !== "/initialsetup" &&
           JSON.parse(data).root_user_github_login_id === null
@@ -213,71 +218,13 @@ class App extends React.Component {
     if (this.state.isFrame) {
       return <Layout style={{ background: "#FEFEFE" }}>{Routes}</Layout>;
     }
-    if (this.state.login) {
-      return (
-        <Layout id="layout" style={{ height: "100vh" }}>
-          <Sider
-            style={{
-              overflow: "auto",
-              background: "#FEFEFE",
-              boxShadow: "10px 0px 20px #E0E0E0"
-            }}
-            width="200"
-          >
-            <div id="logo-login">
-              <img
-                src="/static/img/origami.png"
-                width="180"
-                onClick={_ =>
-                  this.handleClickAfterLogin({ key: "2" }, navLinks)
-                }
-              />
-            </div>
-            <Menu
-              style={{ background: "#FEFEFE" }}
-              mode="inline"
-              defaultSelectedKeys={[currentActiveKey || "2"]}
-              selectedKeys={[currentActiveKey || "2"]}
-              onClick={e => this.handleClickAfterLogin(e, navLinks)}
-            >
-              <Menu.Item key="1" style={{ fontSize: "16px" }}>
-                <Icon type="user" />
-                <span className="nav-text">Profile</span>
-              </Menu.Item>
-              <Menu.Item key="2" style={{ fontSize: "16px" }}>
-                <Icon type="video-camera" />
-                <span className="nav-text">Discover</span>
-              </Menu.Item>
-              <Menu.Item key="3" style={{ fontSize: "16px" }}>
-                <Icon type="cloud-o" />
-                <span className="nav-text">My demos</span>
-              </Menu.Item>
-              <Menu.Item key="4" style={{ fontSize: "16px" }}>
-                <Icon type="plus-circle-o" />
-                <span className="nav-text">Create Demo</span>
-              </Menu.Item>
-              <Menu.Item key="5" style={{ fontSize: "16px" }}>
-                <Icon type="question-circle-o" />
-                <span className="nav-text">Help</span>
-              </Menu.Item>
-              <Menu.Item key="6" style={{ fontSize: "16px" }}>
-                <Icon type="logout" />
-                <span className="nav-text">Logout</span>
-              </Menu.Item>
-
-              {Root_Setting}
-            </Menu>
-          </Sider>
-          {Routes}
-        </Layout>
-      );
-    } else {
+    
       return (
         <Layout id="layout" style={{ height: "100vh" }}>
           {Routes}
         </Layout>
       );
-    }
+    
   }
 }
 

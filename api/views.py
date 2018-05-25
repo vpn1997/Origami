@@ -2,7 +2,7 @@ from django.template.response import TemplateResponse
 
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import detail_route
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from api.serializers import *
 from api.models import *
 from django.contrib.auth.models import User
@@ -20,7 +20,8 @@ import datetime
 import json
 from collections import OrderedDict
 import sys
-
+from django.core import serializers
+import ast
 
 class DemoViewSet(ModelViewSet):
     """

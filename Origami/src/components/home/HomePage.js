@@ -187,8 +187,35 @@ class HomePage extends React.Component {
   render() {
     return (
       <Layout style={{ background: "#FEFEFE" }}>
+  <Header id="layout-header">
+            <Row>
+              <Col span={3} offset={1}>
+                <h2 id="logo-title">Origami</h2>
+              </Col>
+              <Col span={12} offset={3}>
+                <Input.Search
+                  id="search"
+                  placeholder="Search for demos, users"
+                  onSearch={value => this.findDemo(value)}
+                />
+              </Col>
+              <Col span={3} offset={0}>
+                <Col span={3} offset={0}>
+                  <Select
+                    defaultValue="demo"
+                    style={{ width: 85 }}
+                    onChange={value => this.setState({ searchBy: value })}
+                  >
+                    <Option value="demo">demo</Option>
+                    <Option value="user">user</Option>
+                  </Select>
+                </Col>
+              </Col>
+            </Row>
+          </Header>
 
         <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+
           <div
             style={{ padding: 12, background: "#FEFEFE", textAlign: "center" }}
           >

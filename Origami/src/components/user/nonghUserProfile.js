@@ -16,6 +16,7 @@ import { Layout, Icon, Button, Card, Row, Col, Input } from "antd";
 import Radium from "radium";
 import { trimAndPad } from "../../utils/generalUtils";
 import { DEMO_CARD_DESCRIP_MAX_LEN } from "../../constants";
+import { BounceLoader } from "react-spinners";
 
 const { Header, Content, Footer, Sider } = Layout;
 const Search = Input.Search;
@@ -36,7 +37,8 @@ class NonGHUserProfileComponent extends React.Component {
       appData: { type: "", content: "" },
       showDataModal: false,
       permalinkHolder: {},
-      projectBeingDeletedId: ""
+      projectBeingDeletedId: "",
+      demoLoading: true
     };
     this.socket = this.context.socket;
     this.deleteDemo = this.deleteDemo.bind(this);
@@ -65,6 +67,7 @@ class NonGHUserProfileComponent extends React.Component {
               allDeployed.push(tmp.splice(0, 4));
             }
             this.setState({ allDeployed });
+            this.setState({ demoLoading: false });
           })
           .then(() => {
             const stateToPut = {};
@@ -181,7 +184,6 @@ class NonGHUserProfileComponent extends React.Component {
   getStyles() {
     return {
       layout: {
-        background: "#ECEFF1"
       },
       content: {
         margin: "24px 16px 0",
@@ -189,7 +191,6 @@ class NonGHUserProfileComponent extends React.Component {
       },
       contentDiv: {
         padding: 12,
-        background: "#ECEFF1",
         textAlign: "center"
       },
       footer: {
@@ -203,6 +204,11 @@ class NonGHUserProfileComponent extends React.Component {
   }
 
   render() {
+    const demoSpinnerStyle = {
+  position: "fixed",
+  top: "50%",
+  left: "50%"
+};
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     const styles = this.getStyles();
 
@@ -223,8 +229,9 @@ class NonGHUserProfileComponent extends React.Component {
     ];
 
     return (
-      <Layout style={styles.layout}>
+      <Layout >
         <Header id="layout-header">
+
           <Row>
             <Col span={18} offset={1}>
               <h1 id="logo-title">
@@ -233,7 +240,12 @@ class NonGHUserProfileComponent extends React.Component {
             </Col>
           </Row>
         </Header>
-        <Content style={styles.content}>
+                {this.state.demoLoading ? (
+              <div className="demoSpinner" style={demoSpinnerStyle}>
+                <BounceLoader color={"#33aadd"} size={80} />
+              </div>
+            ) : (
+        <Content >
           {this.state.user && (
             <div style={styles.contentDiv}>
               <Row>
@@ -354,10 +366,11 @@ class NonGHUserProfileComponent extends React.Component {
             </div>
           )}
         </Content>
-        <Footer style={styles.footer}>
-          <strong>Origami</strong> - Created by{" "}
-          <a href="http://cloudcv.org/">Team CloudCV</a>
-        </Footer>
+
+        )}
+
+    
+
 
         <Dialog
           title="Modify Application"
