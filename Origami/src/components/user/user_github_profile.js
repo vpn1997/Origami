@@ -20,9 +20,7 @@ class Profile extends Component {
 
   componentWillMount() {
   	userApi.userProfile().then(user => {
-  	console.log("user aya =");
   	user = JSON.parse(user);
-  	console.log(user.login);
       let username=user["login"]
       let name=user["name"]
       let email=user["email"]
@@ -38,20 +36,45 @@ class Profile extends Component {
 
 
 render(){
-console.log("name =");
-console.log(this.state.name)
-console.log(this.state.avatar)
 return(
-	<div>
-<img className="img-avatar" src={this.state.avatar} alt="admin@bootstrapmaster.com"></img>
-<List>
-<ListItem>Name :  {this.state.name}</ListItem>
-<ListItem>username :  {this.state.username}</ListItem>
-<ListItem>email :  {this.state.email}</ListItem>
-<ListItem>bio :  {this.state.bio}</ListItem>
 
-</List>
-</div>
+<div className="container">
+			<div className="profile-sidebar">
+				<div className="profile-userpic">
+					<img src={this.state.avatar} class="img-responsive" alt=""/>
+				</div>
+				<div className="profile-usertitle">
+					<div className="profile-usertitle-name">
+						{this.state.name} 
+					</div>
+					<div className="profile-usertitle-job">
+						{this.state.username} 
+					</div>
+				</div>
+				<div className="profile-userbuttons">
+					<button type="button" className="btn btn-success btn-sm">Follow</button>
+				</div>
+								<div className="profile-usermenu">
+					<ul className="nav">
+						<li >
+						<a href="#">
+							<i className="glyphicon glyphicon-envelope"></i>
+							<span style={{float:'right'}}>{this.state.email}</span></a>
+						</li>
+						<li>
+							<a href="#">
+							<i className="glyphicon glyphicon-user"></i>
+							{this.state.company} </a>
+						</li>
+
+					</ul>
+				</div>
+
+			</div>
+		</div>
+
+
+
 );
 }
 
