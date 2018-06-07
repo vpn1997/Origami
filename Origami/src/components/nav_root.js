@@ -15,7 +15,8 @@ const routes = [
   { path: '/p/:shorturl', exact: true, name: 'short', component: URLShortenerComponent },
   { path: '/ngh/user/register', exact: true, name: 'register', component: RegisterNonGHPageComponent },
   { path: '/login*', name: 'login', component: LoginComponent },
-  { path: '/ngh/user',exact: true, component:NonGHUserProfileComponent },
+  { path: '/ngh/user',exact: true, component:NonGHUserProfileComponent }
+
 
 
 

@@ -218,9 +218,9 @@ class App extends React.Component {
     if (this.state.isFrame) {
       return <Layout style={{ background: "#FEFEFE" }}>{Routes}</Layout>;
     }
-    
+      console.log("loc =",this.props.location.pathname)
       return (
-        <Layout id="layout" style={{ height: "100vh" }}>
+        <Layout id="layout" style={{ height: "100vh",width:"100%",backgroundColor:'#F0F0F0' }}>
           {Routes}
         </Layout>
       );

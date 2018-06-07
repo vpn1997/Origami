@@ -28,7 +28,7 @@ import toastr from "toastr";
 import { Layout, Row, Col } from "antd";
 import { ORIGAMI_READ_THE_DOCS } from "../../../constants";
 import { Card, Icon, Image,Button,Dimmer,Header} from 'semantic-ui-react'
-
+import Cards from '../../stateless/task_cards'
 
 
 const { Content, Footer } = Layout;
@@ -68,7 +68,8 @@ class RegisterPage extends React.Component {
       permalinkObject: {},
       active:0,
       btnactive:0,
-      btnclicked:0
+      btnclicked:0,
+      subhover:0
     };
     this.socket = this.context.socket;
     this.toggleShow = this.toggleShow.bind(this);
@@ -434,15 +435,15 @@ class RegisterPage extends React.Component {
   getStyles() {
     return {
       layout: {
-        background: "#FFFFFF"
+        background: '#F0F0F0' 
       },
       content: {
-        margin: "24px 0 0",
+        margin: "24px 0 0 12px",
         overflow: "initial"
       },
       contentDiv: {
-        padding: "12px 0",
-        background: "#FFFFFF"
+        padding: "5px 0",
+        background: '#F0F0F0'
       },
       footer: {
         backgroundColor: grey900,
@@ -461,10 +462,12 @@ class RegisterPage extends React.Component {
       },
       config:{
         borderStyle:'Solid',
-        borderColor:'#498fff',
+        borderColor:'#949494',
         color:'#6C6666',width:'100%',
         backgroundColor:'White',
-        borderWidth:'2px',borderRadius:'30px'
+        borderWidth:'2px',borderRadius:'30px',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23)', 
+        transition: 'all 0.3s'
       },
       txt:{
         fontFamily:'"Open Sans", "Helvetica", sans-serif',
@@ -483,7 +486,9 @@ class RegisterPage extends React.Component {
         borderWidth:'2px',
         transition: '.3s ease',
         backfaceVisibility: 'hidden',
-        opacity: '0.8'
+        opacity: '0.8',
+        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)', 
+        transition: 'all 0.3s'
       },
       btnactive:{
         borderStyle:'Solid',
@@ -491,15 +496,46 @@ class RegisterPage extends React.Component {
         borderWidth:'2px',
         borderRadius:'30px',
         backgroundColor:'#443E3E',
-        color:'White'
+        color:'White',
+        boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)', 
+        transition: 'all 0.3s'
       },
 
       box:{
        flexGrow: "5.75",
         minWidth: "300px",
         padding:'30px', 
+        backgroundColor:'#fffff'
 
         
+      },
+      tpbox:{
+        border:'1px solid #F3F2F2',
+        backgroundColor:'White',
+        bordeRadius: '3px'
+      },
+
+      sub:{
+        borderStyle:'Solid',
+        width:'100%',
+        borderWidth:'2px',
+        borderRadius:'30px',
+        backgroundColor:'#443E3E',
+        color:'White',
+        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)', 
+        transition: 'all 0.3s' 
+      },
+
+      subhover:{
+                borderStyle:'Solid',
+        width:'100%',
+        borderWidth:'2px',
+        borderRadius:'30px',
+        backgroundColor:'#443E3E',
+        color:'White',
+        boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)', 
+        transition: 'all 0.3s' 
+
       }
 
     };
@@ -521,8 +557,11 @@ class RegisterPage extends React.Component {
 
     exit(){
       
-    this.setState({active:0,btnactive:0});
+    this.setState({active:0,btnactive:0,subhover:0});
     
+  }
+  sub(e){
+    this.setState({subhover:e});
   }
 
   helpDirect() {
@@ -548,11 +587,19 @@ class RegisterPage extends React.Component {
       </div>
     )
 
-
+ const head=['Style Transfer','VQA','Clssification','GradCam']
+ const tasks=[];
+ for(var i=1;i<5;i++)
+ {
+  tasks.push(
+    <Cards header={head[i]} count={i} />
+    )
+ }
 
   
 
     return (
+      <div style={{backgroundColor:'#CDCDCD'}}>
       <Layout style={styles.layout}>
         {this.state.showOutput === "hidden" && (
           <div className="centered row" style={{ marginTop: "30vh" }}>
@@ -567,7 +614,8 @@ class RegisterPage extends React.Component {
                   visibility: this.state.showOutput,
                   width: "100%",
                   maxWidth: 700,
-                  margin: "auto"
+                  margin: "auto",
+                  marginTop:"5px"
                 }}
               >
                 <Stepper linear={false}>
@@ -582,7 +630,9 @@ class RegisterPage extends React.Component {
 
                 </Stepper>
               </div>
+
             </Row>
+            <div style={styles.tpbox}>
               <div
                 className="sixteen wide column stretched"
                 style={{ visibility: this.state.showOutput }}
@@ -608,7 +658,7 @@ class RegisterPage extends React.Component {
                       style={styles.box}
                     >
 
-                <a class="ui tag label large hvr-float " >Step 1 : Basic Details</a>
+                <a class="ui tag label large" style={{boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'}} >Step 1 : Basic Details</a>
                 <br/>
                          <div class="ui grid">
                          <div class="two wide column">
@@ -636,30 +686,30 @@ class RegisterPage extends React.Component {
 
                     </div>
 
-                  <a className="ui tag label large" style={{marginTop:'50px'}}>Step 2 : Choose your Task</a>
+                  <a className="ui tag label large" style={{marginTop:'50px',boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'}}>Step 2 : Choose your Task</a>
                   <br/>
                   <br/>
 
                   <div className="ui grid">
                   <div className="two wide column">
                   </div>
-                  <div className="twelve wide column">
-                  <Card.Group itemsPerRow={4} >
-                      <Card  onMouseEnter={this.hover.bind(this,1)} onMouseLeave={this.exit} style={this.state.active==1?styles.active:{}}
-                      header='VQA' raised image={require('../../assets/VQ.png')} />  
-                      <div className="two wide column"/>  
-                      <Card onMouseEnter={this.hover.bind(this,2)} onMouseLeave={this.exit} style={this.state.active==2?styles.active:{}}  
-                      header='Grad Cam' raised image={require('../../assets/grad.png')} />
-                      <Card onMouseEnter={this.hover.bind(this,3)} onMouseLeave={this.exit} style={this.state.active==3?styles.active:{}}
-                       header='Style Transfer' raised image={require('../../assets/style.jpg')} />
-                      <Card onMouseEnter={this.hover.bind(this,4)} onMouseLeave={this.exit} style={this.state.active==4?styles.active:{}} 
-                      header='Classification' raised image={require('../../assets/class.jpg')} />
-                      
-                    </Card.Group>
+                  <div className=" three wide column">
+                    <Cards header={'VQA'} count={1}/>
                   </div>
+                  <div className=" three wide column">
+                    <Cards header={'Style Transfer'} count={2}/> 
+                  </div>
+                  <div className=" three wide column">
+                    <Cards header={'Grad Cam'} count={2}/> 
+                  </div>
+                  <div className=" three wide column">
+                    <Cards header={'Classification'} count={2}/> 
+                  </div>
+                  
+                 
                   </div>
 
-                  <a class="ui tag label large" style={{marginTop:'50px'}}>Step 3 : Select System Configuration</a>
+                  <a class="ui tag label large" style={{marginTop:'50px',boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'}}>Step 3 : Select System Configuration</a>
                   <br/>
                   <br/>
                   <div className="ui grid">
@@ -766,7 +816,7 @@ class RegisterPage extends React.Component {
                   </div>
           
 
-                  <a className="ui tag label large" style={{marginTop:'50px'}}>Step 4 (optional) : Upload cover Image </a>
+                  <a className="ui tag label large" style={{marginTop:'50px',boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'}}>Step 4 (optional) : Upload cover Image </a>
                                             <br/>
                   <br/>
                   <div className="ui grid">
@@ -805,7 +855,7 @@ class RegisterPage extends React.Component {
               <div className="ui grid">
                <div className="three wide column" />
                <div className="three wide column" >
-                    <Button style={styles.config} >
+                    <Button onMouseEnter={this.sub.bind(this,1)} onMouseLeave={this.exit} style={this.state.subhover==1 ?styles.subhover:styles.sub} >
                         <text style={styles.txt}>
                         Reset
                         </text>
@@ -814,7 +864,7 @@ class RegisterPage extends React.Component {
 
               <div className="two wide column" />
               <div className="three wide column">
-                  <Button primary style={styles.config}  >
+                  <Button primary onMouseEnter={this.sub.bind(this,2)} onMouseLeave={this.exit} style={this.state.subhover==2 ?styles.subhover:styles.sub}  >
                         <text style={styles.txt}>
                         Submit
                         </text>
@@ -837,9 +887,11 @@ class RegisterPage extends React.Component {
                 </div>
                 </div>
               </div>
+              </div>
         </Content>
         
       </Layout>
+      </div>
     );
   }
 }
