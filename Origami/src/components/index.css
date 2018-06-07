@@ -17,6 +17,14 @@ body {
   margin-top: 15px;
   
 }
+.follow{
+    background-color:#FC563B;
+    height: 80px;
+    cursor:pointer;
+}
+.line{
+    border-bottom : 2px solid #F32D27;
+}
 
 #logo{
   margin-top: -10px;
@@ -58,7 +66,7 @@ Licensed under MIT
 
 /* Profile container */
 .profile {
-  margin: 5px 0;
+  margin: 3px 0;
 }
 
 /* Profile sidebar */
@@ -116,6 +124,10 @@ Licensed under MIT
     
 .profile-usermenu {
   margin-top: 30px;
+}
+.btn-group {
+  padding: 3px 7px;
+  margin-right: 5px; 
 }
 
 .profile-usermenu ul li {

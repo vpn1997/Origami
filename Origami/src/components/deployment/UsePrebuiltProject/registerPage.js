@@ -27,6 +27,8 @@ import { Step, Stepper, StepLabel } from "material-ui/Stepper";
 import toastr from "toastr";
 import { Layout, Row, Col } from "antd";
 import { ORIGAMI_READ_THE_DOCS } from "../../../constants";
+import { Card, Icon, Image,Button,Dimmer,Header} from 'semantic-ui-react'
+
 
 
 const { Content, Footer } = Layout;
@@ -63,7 +65,10 @@ class RegisterPage extends React.Component {
       returning: false,
       inputComponentStepperHighlight: false,
       outputComponentStepperHighlight: false,
-      permalinkObject: {}
+      permalinkObject: {},
+      active:0,
+      btnactive:0,
+      btnclicked:0
     };
     this.socket = this.context.socket;
     this.toggleShow = this.toggleShow.bind(this);
@@ -82,6 +87,9 @@ class RegisterPage extends React.Component {
     this.validateIP = this.validateIP.bind(this);
     this.validatePort = this.validatePort.bind(this);
     this.getStyles = this.getStyles.bind(this);
+    this.hover=this.hover.bind(this);
+    this.exit=this.exit.bind(this);
+    this.btnEnter=this.btnEnter.bind(this);
   }
 
   componentWillMount() {
@@ -338,6 +346,7 @@ class RegisterPage extends React.Component {
     }
   }
 
+
   updateDescription(e) {
     this.setState({ description: e.target.value });
   }
@@ -442,8 +451,78 @@ class RegisterPage extends React.Component {
         marginTop: "4vh",
         height: "4rem",
         zIndex: "2"
+      },
+      tag:{
+        color:'#938E8E',
+        paddingTop:'5px',
+        fontFamily:'"Open Sans", "Helvetica", sans-serif',
+        fontSize:'1.5em'
+
+      },
+      config:{
+        borderStyle:'Solid',
+        borderColor:'#498fff',
+        color:'#6C6666',width:'100%',
+        backgroundColor:'White',
+        borderWidth:'2px',borderRadius:'30px'
+      },
+      txt:{
+        fontFamily:'"Open Sans", "Helvetica", sans-serif',
+        fontSize:'1em'
+      },
+      req:{
+        color:'#514C4B',
+        paddingTop:'5px',
+        fontFamily:'"Open Sans", "Helvetica", sans-serif',
+        fontSize:'1.5em'
+
+      },
+      active:{
+        borderStyle:'Solid',
+        borderColor:'#eaeaea',
+        borderWidth:'2px',
+        transition: '.3s ease',
+        backfaceVisibility: 'hidden',
+        opacity: '0.8'
+      },
+      btnactive:{
+        borderStyle:'Solid',
+        width:'100%',
+        borderWidth:'2px',
+        borderRadius:'30px',
+        backgroundColor:'#443E3E',
+        color:'White'
+      },
+
+      box:{
+       flexGrow: "5.75",
+        minWidth: "300px",
+        padding:'30px', 
+
+        
       }
+
     };
+  }
+
+  hover(e){
+
+    this.setState({active:e});
+    }
+     btnEnter(e){
+    console.log("btn enter =",e)
+    this.setState({btnactive:e});
+    }
+
+         btnclicked(e){
+
+    this.setState({btnclicked:e});
+    }
+
+    exit(){
+      
+    this.setState({active:0,btnactive:0});
+    
   }
 
   helpDirect() {
@@ -451,6 +530,8 @@ class RegisterPage extends React.Component {
   }
 
   render() {
+
+    const { active } = this.state
     let tokenClassName =
       this.validateTempwebaddress() &&
       this.validateIP() &&
@@ -458,6 +539,19 @@ class RegisterPage extends React.Component {
         ? "ui positive message"
         : "ui negative message";
     let styles = this.getStyles();
+    const content = (
+      <div>
+        <Header className="ui small">
+          Know More 
+        </Header>
+
+      </div>
+    )
+
+
+
+  
+
     return (
       <Layout style={styles.layout}>
         {this.state.showOutput === "hidden" && (
@@ -483,14 +577,12 @@ class RegisterPage extends React.Component {
                     </StepLabel>
                   </Step>
                   <Step active={this.state.inputComponentStepperHighlight}>
-                    <StepLabel>Select Input Component</StepLabel>
+                    <StepLabel>Configure bundled code </StepLabel>
                   </Step>
-                  <Step active={this.state.outputComponentStepperHighlight}>
-                    <StepLabel>Select Output Component</StepLabel>
-                  </Step>
+
                 </Stepper>
               </div>
-
+            </Row>
               <div
                 className="sixteen wide column stretched"
                 style={{ visibility: this.state.showOutput }}
@@ -504,62 +596,183 @@ class RegisterPage extends React.Component {
                   Register Application
                 </h1>
 
-                <div
+                </div>
+                                <div
                   className="ui grid container"
                   style={{ position: "relative" }}
                 >
-                  <div className="ui grid container">
-                    <hr className="ui grid container" />
-                  </div>
-                  <div className="ui grid container">
+                <div className="ui grid container" >
+
                     <div
                       className="column aligned"
-                      style={{ flexGrow: "5.75", minWidth: "300px" }}
+                      style={styles.box}
                     >
+
+                <a class="ui tag label large hvr-float " >Step 1 : Basic Details</a>
+                <br/>
+                         <div class="ui grid">
+                         <div class="two wide column">
+                         </div>
+                 <div class="four wide column">
                       <TextField
                         hintText="MyApp"
                         floatingLabelText="Appname"
                         value={this.state.name}
                         errorText={this.state.nameErrorText}
                         onChange={this.updateName}
-                      />&nbsp;&nbsp;&nbsp;&nbsp;
-                      <TextField
-                        hintText="0.0.0.0"
-                        errorText={this.state.addressErrorText}
-                        floatingLabelText="IP of service (no http://)"
-                        value={this.state.address}
-                        onChange={this.updateAddress}
                       />
-                      <br />
+                      </div>
+                      <div class="two wide column">
+                      </div>
+                 <div class="four wide column">
                       <TextField
                         hintText="Description"
                         floatingLabelText="Description"
                         value={this.state.description}
                         onChange={this.updateDescription}
-                        multiLine
-                        rows={2}
-                        rowsMax={8}
-                      />&nbsp;&nbsp;&nbsp;&nbsp;
-                      <TextField
-                        hintText="Footer Message"
-                        floatingLabelText="Footer Message"
-                        value={this.state.footer_message}
-                        onChange={this.updatefooter_message}
-                        multiLine
-                        rows={2}
-                        rowsMax={8}
+
                       />
-                      <br />
-                      <TextField
-                        hintText="8000"
-                        errorText={this.state.portErrorText}
-                        floatingLabelText="Port for service"
-                        value={this.state.port}
-                        onChange={this.updatePort}
-                      />
-                      <br />
-                      <br />
-                      <div
+                      </div>
+
+                    </div>
+
+                  <a className="ui tag label large" style={{marginTop:'50px'}}>Step 2 : Choose your Task</a>
+                  <br/>
+                  <br/>
+
+                  <div className="ui grid">
+                  <div className="two wide column">
+                  </div>
+                  <div className="twelve wide column">
+                  <Card.Group itemsPerRow={4} >
+                      <Card  onMouseEnter={this.hover.bind(this,1)} onMouseLeave={this.exit} style={this.state.active==1?styles.active:{}}
+                      header='VQA' raised image={require('../../assets/VQ.png')} />  
+                      <div className="two wide column"/>  
+                      <Card onMouseEnter={this.hover.bind(this,2)} onMouseLeave={this.exit} style={this.state.active==2?styles.active:{}}  
+                      header='Grad Cam' raised image={require('../../assets/grad.png')} />
+                      <Card onMouseEnter={this.hover.bind(this,3)} onMouseLeave={this.exit} style={this.state.active==3?styles.active:{}}
+                       header='Style Transfer' raised image={require('../../assets/style.jpg')} />
+                      <Card onMouseEnter={this.hover.bind(this,4)} onMouseLeave={this.exit} style={this.state.active==4?styles.active:{}} 
+                      header='Classification' raised image={require('../../assets/class.jpg')} />
+                      
+                    </Card.Group>
+                  </div>
+                  </div>
+
+                  <a class="ui tag label large" style={{marginTop:'50px'}}>Step 3 : Select System Configuration</a>
+                  <br/>
+                  <br/>
+                  <div className="ui grid">
+                  <div className="one wide column">
+                  </div>
+                  <div className="one wide column" >
+                  <text style={styles.tag}>OS  </text>
+                  </div>
+                  <div className="three wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,1)} onClick={this.btnclicked.bind(this,1)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==1||this.state.btnclicked==1?styles.btnactive:styles.config} >
+                        <text style={styles.txt}>
+                        Linux
+                        </text>
+                    </Button>
+                  </div>
+                  <div className="three wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,2)} onClick={this.btnclicked.bind(this,2)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==2||this.state.btnclicked==2?styles.btnactive:styles.config} >
+                        <text style={styles.txt}>
+                        MacOS
+                        </text>
+                    </Button>
+                  </div>                  
+                  <div className="three wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,3)} onClick={this.btnclicked.bind(this,3)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==3||this.state.btnclicked==3?styles.btnactive:styles.config}>
+                        <text style={styles.txt}>
+                        Windows
+                        </text>
+                    </Button>
+                  </div>
+                  </div> 
+
+                                    <div className="ui grid">
+
+                  <div className="two wide column" style={{paddingLeft:'50px'}}>
+                  <h2 style={styles.tag}> Python </h2>
+                  </div>
+                  <div className="three wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,4)} onClick={this.btnclicked.bind(this,4)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==4||this.state.btnclicked==4?styles.btnactive:styles.config} >
+                        <text style={styles.txt}>
+                        2.7
+                        </text>
+                    </Button>
+                  </div>
+                  <div className="three wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,5)} onClick={this.btnclicked.bind(this,5)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==5||this.state.btnclicked==5?styles.btnactive:styles.config} >
+                        <text style={styles.txt}>
+                        3.5
+                        </text>
+                    </Button>
+                  </div>                  
+                  <div className="three wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,6)} onClick={this.btnclicked.bind(this,6)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==6||this.state.btnclicked==6?styles.btnactive:styles.config} >
+                        <text style={styles.txt}>
+                        3.6
+                        </text>
+                    </Button>
+                  </div>
+                  </div>
+
+
+                    <div className="ui grid">
+
+                  <div className="two wide column" style={{paddingLeft:'50px'}}>
+                  <h2 style={styles.tag}>  CUDA </h2>
+                  </div>
+                  <div className="two wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,7)} onClick={this.btnclicked.bind(this,7)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==7||this.state.btnclicked==7?styles.btnactive:styles.config} >
+                        <text style={styles.txt}>
+                        8
+                        </text>
+                    </Button>
+                  </div>
+                  <div className="two wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,8)} onClick={this.btnclicked.bind(this,8)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==8||this.state.btnclicked==8?styles.btnactive:styles.config} >
+                        <text style={styles.txt}>
+                        9
+                        </text>
+                    </Button>
+                  </div>                  
+                  <div className="two wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,9)} onClick={this.btnclicked.bind(this,9)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==9||this.state.btnclicked==9?styles.btnactive:styles.config} >
+                        <text style={styles.txt}>
+                        9.1
+                        </text>
+                    </Button>
+                  </div>
+                  <div className="two wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,10)} onClick={this.btnclicked.bind(this,10)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==10||this.state.btnclicked==10?styles.btnactive:styles.config} >
+                        <text style={styles.txt}>
+                        None
+                        </text>
+                    </Button>
+                  </div>
+                  </div>
+          
+
+                  <a className="ui tag label large" style={{marginTop:'50px'}}>Step 4 (optional) : Upload cover Image </a>
+                                            <br/>
+                  <br/>
+                  <div className="ui grid">
+                  <div className="one wide column"/>
+                  <div className="seven wide column">
+                  <div
                         className=""
                         style={{ cursor: "pointer", maxWidth: "50%" }}
                       >
@@ -585,152 +798,47 @@ class RegisterPage extends React.Component {
                           </div>
                         </Dropzone>
                       </div>
-                      <div className="" style={{ maxWidth: "50%" }}>
-                        <Checkbox
-                          checked={this.state.showTerminal}
-                          onCheck={this.toggleTerminal}
-                          label="Show Terminal on demo page"
-                        />
-                        <br />
-                      </div>
-                      {this.state.webappUnreachableErrorText.length > 0 && (
-                        <div
-                          className="ui raised compact centered red segment"
-                          style={{ color: "red" }}
-                        >
-                          {this.state.webappUnreachableErrorText}
-                          <br />
-                        </div>
-                      )}
-                      {this.state.webappLocalUnreachableErrorText.length > 0 &&
-                        this.state.deploymentBoxSelectedStatus && (
-                          <div
-                            className="ui raised compact centered red segment"
-                            style={{ color: "red" }}
-                          >
-                            {this.state.webappLocalUnreachableErrorText}
-                            <br />
-                          </div>
-                        )}
-                      {this.state.showLocalDeploymentCheckBox && (
-                        <div className="" style={{ maxWidth: "45%" }}>
-                          <Checkbox
-                            checked={this.state.deploymentBoxSelectedStatus}
-                            disabled={this.state.returning}
-                            onCheck={this.onLocalDeploymentCheckBoxCheck}
-                            label="WebApp is running locally"
-                          />
-                        </div>
-                      )}
-                      <br />
-                      <RaisedButton
-                        label="Save"
-                        primary
-                        onClick={this.updateDemoModelData}
-                      />
+                  </div>
+                  </div>
+
+  
+              <div className="ui grid">
+               <div className="three wide column" />
+               <div className="three wide column" >
+                    <Button style={styles.config} >
+                        <text style={styles.txt}>
+                        Reset
+                        </text>
+                  </Button>
+                </div>
+
+              <div className="two wide column" />
+              <div className="three wide column">
+                  <Button primary style={styles.config}  >
+                        <text style={styles.txt}>
+                        Submit
+                        </text>
+                  </Button>
+              </div>
+
+              </div>
+
+
+                             
+
+
+
+
+
+
+
                     </div>
 
-                    <div className="ui vertical internal divider">
-                      <hr />
-                    </div>
-                    <div
-                      className="column"
-                      style={{
-                        minWidth: "350px",
-                        flexGrow: "4.25",
-                        padding: 0
-                      }}
-                    >
-                      <div className="ui raise fluid very padded container text">
-                        <br />
-                        <div className="ui relaxed grid container segment">
-                          <div className="two column row">
-                            <div className="thirteen wide column">
-                              <div
-                                className={tokenClassName}
-                                style={{ wordWrap: "break-word" }}
-                              >
-                                <u>Token:</u>
-                                <b>
-                                  <p style={{ fontSize: "90%" }}>
-                                    {`nongh:${this.state.address}:${
-                                      this.state.id
-                                    }:${this.state.currentPort}:` +
-                                      `${this.state.port}:${
-                                        this.state.tempwebaddress
-                                      }`}
-                                  </p>
-                                </b>
-                              </div>
-                            </div>
-                            <div className="three wide column">
-                              {this.validateTempwebaddress() &&
-                              this.validateIP() &&
-                              this.validatePort(this.state.port) ? (
-                                <GoAhead
-                                  style={{ height: "", width: "" }}
-                                  color={green500}
-                                />
-                              ) : (
-                                <StopNow
-                                  style={{ height: "", width: "" }}
-                                  color={red500}
-                                />
-                              )}
-                            </div>
-                          </div>
-                          <div className="one column row">
-                            <div className="sixteen wide column">
-                              <div className="ui info message">
-                                <div className="header">Steps</div>
-                                <ul className="list">
-                                  <li>
-                                    "IP of service" is the public IP address of
-                                    the machine where the ML evaluation code is
-                                    running (or will be run) with the help of
-                                    cvfy lib.
-                                  </li>
-                                  <li>
-                                    "Port of service" is the port of the above
-                                    mentioned service.
-                                  </li>
-                                  <li>
-                                    Enter the application details and copy the
-                                    Token.
-                                  </li>
-                                  <li>
-                                    Use this Token to do registration with the
-                                    cvfy lib. See  <a onClick={this.helpDirect}> Getting Started
-                                    </a>
-                                    .
-                                  </li>
-                                </ul>
-                              </div>
-                              {(this.state.webappUnreachableErrorText.length >
-                                0 ||
-                                this.state.webappLocalUnreachableErrorText
-                                  .length > 0) && (
-                                <div className="ui orange message">
-                                  <p>
-                                    If this is a local deployment (your machine
-                                    is not reachable on it's public IP), you
-                                    must select the "Webapp is running locally"
-                                    option.
-                                  </p>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                </div>
                 </div>
               </div>
-            </Row>
-          </div>
         </Content>
-        <Footer style={styles.footer}>© CloudCV, 2016</Footer>
+        
       </Layout>
     );
   }

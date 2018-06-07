@@ -18,6 +18,7 @@ import NGHDemoPageComponent from "./deployment/UsePrebuiltProject/nghDemoPage";
 import NGHDemoFrameComponent from "./deployment/UsePrebuiltProject/nghDemoFrame";
 import DefaultLayout from "../ui/src/containers/DefaultLayout" 
 import Loadable from 'react-loadable'
+import LandingPage from './Landing/landing_page'
 
 
 function Loading() {
@@ -30,6 +31,7 @@ const Colors = Loadable({
 });
 export default (
   <Switch>
+    <Route  exact path="/land" component={LandingPage} />
     <Route  path="/" component={DefaultLayout} />
     <Route exact path="/home" component={HomePageComponent} />
     <Route exact path="/profile" component={LoginComponent} />

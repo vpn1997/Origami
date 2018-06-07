@@ -29,6 +29,8 @@ import toastr from "toastr";
 import { SocialDialog } from "../social/SocialDialog";
 import { trimAndPad } from "../../utils/generalUtils";
 import { DEMO_CARD_DESCRIP_MAX_LEN } from "../../constants";
+import {selectUser} from '../../actions/user_profile_action';
+
 
 const { Header, Content, Footer } = Layout;
 const Option = Select.Option;
@@ -219,7 +221,7 @@ class HomePage extends React.Component {
           <div
             style={{ padding: 12, background: "#FEFEFE", textAlign: "center" }}
           >
-            {this.state.demoLoading ? (
+           {this.state.demoLoading ? (
               <div className="demoSpinner" style={demoSpinnerStyle}>
                 <BounceLoader color={"#33aadd"} size={80} />
               </div>
@@ -232,13 +234,13 @@ class HomePage extends React.Component {
                         {row.map(demo => (
                           <Col span={5} offset={1} key={demo.id}>
                             <Card
-                              style={{ width: "100%" }}
+                              style={{ width: "100%"}}
                               bodyStyle={{ padding: 0 }}
                             >
                               <div className="custom-card">
                                 <br />
                                 <h3>{demo.name}</h3>
-                                <h4> - {demo.username}</h4>
+                                <h4 onClick={this.props.userclick.bind(this,demo.username)}> - {demo.username}</h4>
                                 <br />
                                 <p />
                               </div>
@@ -318,7 +320,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    loginactions: bindActionCreators(loginActions, dispatch)
+    loginactions: bindActionCreators(loginActions, dispatch),
+    userclick: bindActionCreators(selectUser, dispatch)
   };
 }
 

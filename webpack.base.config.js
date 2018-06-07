@@ -16,6 +16,9 @@ module.exports = {
   },
 
   externals: [], // add all vendor libs
+  headers: {
+  'Access-Control-Allow-Origin': '*'
+},
 
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({

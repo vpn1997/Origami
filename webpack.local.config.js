@@ -11,7 +11,12 @@ const config = {
   ],
   devServer: {
     inline: true,
-    hot: true
+    hot: true,
+    headers: {
+    'Access-Control-Allow-Credentials': true,
+    'Access-Control-Allow-Origin': '*'
+    }
+
   },
   target: "web",
   output: {
@@ -19,6 +24,7 @@ const config = {
     publicPath: "http://localhost:3000/static/bundles/",
     filename: "bundle.js"
   },
+
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
