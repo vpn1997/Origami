@@ -19,7 +19,7 @@ import NGHDemoFrameComponent from "./deployment/UsePrebuiltProject/nghDemoFrame"
 import DefaultLayout from "../ui/src/containers/DefaultLayout" 
 import Loadable from 'react-loadable'
 import LandingPage from './Landing/landing_page'
-
+import InstructionsPage from './deployment/UsePrebuiltProject/instructionsPage'
 
 function Loading() {
   return <div>Loading...</div>;
@@ -35,7 +35,9 @@ export default (
     <Route  path="/" component={DefaultLayout} />
     <Route exact path="/home" component={HomePageComponent} />
     <Route exact path="/profile" component={LoginComponent} />
+    <Route exact path="/instructions" component={InstructionsPage} />
     <Route exact path="/ngh/user" component={NonGHUserProfileComponent} />
+
 
     <Route
       exact

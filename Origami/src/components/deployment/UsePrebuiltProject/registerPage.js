@@ -4,16 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import CircularProgress from "material-ui/CircularProgress";
-import * as nonghDemoModelActions from "../../../actions/nonghDemoModelActions";
 import rangeCheck from "range_check";
-import { getDeployed } from "../../../api/Nongh/getDeployed";
-import { getComponentDeployed } from "../../../api/CommonLocal/getComponentDeployed";
-import {
-  getSinglePermalink,
-  getAllPermalink,
-  addPermalink,
-  modifyPermalink
-} from "../../../api/Nongh/permalink";
 import { getWebAppStatus } from "../../../api/Generic/getWebAppStatus";
 import RaisedButton from "material-ui/RaisedButton";
 import StopNow from "material-ui/svg-icons/action/pan-tool";
@@ -39,331 +30,29 @@ class RegisterPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      showOutput: "hidden",
-      id: Math.floor(Math.random() * 10000000).toString(),
-      user_id: parseInt(localStorage.getItem("user_id"), 10),
-      currentProject: {},
-      nonghDemoModel: {},
-      name: "",
       description: "",
-      nameErrorText: "",
-      addressErrorText: "",
-      portErrorText: "",
-      address: "",
-      port: "",
-      currentPort: "",
-      webappaddress: "",
-      tempwebaddress: "",
-      footer_message: "",
       cover_image: "",
-      deploymentBoxSelectedStatus: false,
-      status: "",
-      webappUnreachableErrorText: "",
-      webappLocalUnreachableErrorText: "",
-      showLocalDeploymentCheckBox: true,
       showTerminal: false,
-      returning: false,
-      inputComponentStepperHighlight: false,
-      outputComponentStepperHighlight: false,
-      permalinkObject: {},
       active:0,
       btnactive:0,
       btnclicked:0,
       subhover:0
     };
-    this.socket = this.context.socket;
-    this.toggleShow = this.toggleShow.bind(this);
-    this.updateDemoModelData = this.updateDemoModelData.bind(this);
-    this.onLocalDeploymentCheckBoxCheck = this.onLocalDeploymentCheckBoxCheck.bind(
-      this
-    );
-    this.updateDescription = this.updateDescription.bind(this);
-    this.updateAddress = this.updateAddress.bind(this);
     this.updateName = this.updateName.bind(this);
-    this.updatePort = this.updatePort.bind(this);
-    this.updatefooter_message = this.updatefooter_message.bind(this);
+    this.updateDescription = this.updateDescription.bind(this);
     this.onDrop = this.onDrop.bind(this);
     this.toggleTerminal = this.toggleTerminal.bind(this);
-    this.validateTempwebaddress = this.validateTempwebaddress.bind(this);
-    this.validateIP = this.validateIP.bind(this);
-    this.validatePort = this.validatePort.bind(this);
     this.getStyles = this.getStyles.bind(this);
     this.hover=this.hover.bind(this);
     this.exit=this.exit.bind(this);
     this.btnEnter=this.btnEnter.bind(this);
   }
 
-  componentWillMount() {
-    getDeployed(this.state.user_id, this.props.match.params.repoId)
-      .then(singleRepo => {
-        if (this.props.match.params.repoId) {
-          if (JSON.parse(singleRepo).length !== 0) {
-            this.setState({ returning: true });
-            this.setState({
-              tempwebaddress: JSON.parse(singleRepo)[0].token.split(":")[1]
-            });
-            if (JSON.parse(singleRepo)[0].token.split(":")[1] === "0.0.0.0") {
-              this.setState({ showLocalDeploymentCheckBox: true });
-            }
-            this.setState({ id: JSON.parse(singleRepo)[0].id });
-            this.setState({ name: JSON.parse(singleRepo)[0].name });
-            this.setState({ status: JSON.parse(singleRepo)[0].status });
-            this.setState({
-              address: JSON.parse(singleRepo)[0].token.split(":")[1]
-            });
-            this.setState({
-              tempwebaddress: JSON.parse(singleRepo)[0].token.split(":")[5]
-            });
-            this.setState({
-              port: JSON.parse(singleRepo)[0].token.split(":")[4]
-            });
-            this.setState({
-              description: JSON.parse(singleRepo)[0].description
-            });
-            this.setState({
-              footer_message: JSON.parse(singleRepo)[0].footer_message
-            });
-            this.setState({
-              cover_image: JSON.parse(singleRepo)[0].cover_image
-            });
-            this.setState({ showTerminal: JSON.parse(singleRepo)[0].terminal });
-            if (JSON.parse(singleRepo)[0].token.split(":")[5] === "0.0.0.0") {
-              this.setState({ deploymentBoxSelectedStatus: true });
-            }
-          }
-        }
-      })
-      .then(() => {
-        if (this.props.match.params.repoId) {
-          getComponentDeployed(
-            this.state.user_id,
-            this.props.match.params.repoId,
-            "input"
-          ).then(inputComponentSeedData => {
-            if (JSON.parse(inputComponentSeedData).length !== 0) {
-              this.setState({ inputComponentStepperHighlight: true });
-            }
-          });
-        }
-      })
-      .then(() => {
-        if (this.props.match.params.repoId) {
-          getComponentDeployed(
-            this.state.user_id,
-            this.props.match.params.repoId,
-            "output"
-          ).then(outputComponentSeedData => {
-            if (JSON.parse(outputComponentSeedData).length !== 0) {
-              this.setState({ outputComponentStepperHighlight: true });
-            }
-          });
-        }
-      })
-      .then(() => {
-        if (this.props.match.params.repoId) {
-          getSinglePermalink(
-            this.state.user_id,
-            this.props.match.params.repoId
-          ).then(data => {
-            if (JSON.parse(data).text !== "Not Found") {
-              this.setState({ permalinkObject: JSON.parse(data) });
-            }
-          });
-        }
-        let socket = this.socket;
-        socket.send(
-          JSON.stringify({
-            event: "fetchCurrentPort"
-          })
-        );
-        socket.send(
-          JSON.stringify({
-            event: "getPublicIPaddress"
-          })
-        );
-        socket.onmessage = function(response) {
-          let data = JSON.parse(response.data);
-          const event = data.event;
-          data = data.data;
-          if (event === "fetchedCurrentPort") {
-            this.setState({ currentPort: data });
-          } else if (event === "gotPublicIP") {
-            this.setState({ webappaddress: data }, () => {
-              if (this.state.tempwebaddress.length === 0) {
-                this.setState({ tempwebaddress: this.state.webappaddress });
-              }
-            });
-            getWebAppStatus(data)
-              .then(() => {})
-              .catch(err => {
-                this.setState({
-                  webappUnreachableErrorText:
-                    "This WebApp cannot be reached on it's public IP"
-                });
-              });
-            this.toggleShow();
-          }
-        }.bind(this);
-        this.setState({ showLocalDeploymentCheckBox: true });
-      });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.state.nonghDemoModel !== nextProps.nonghDemoModel) {
-      this.setState({ nonghDemoModel: nextProps.nonghDemoModel });
-    }
-  }
-
-  onLocalDeploymentCheckBoxCheck(e) {
-    if (!this.state.deploymentBoxSelectedStatus) {
-      getWebAppStatus(window.location.hostname)
-        .then(() => {})
-        .catch(err => {
-          this.setState({
-            webappLocalUnreachableErrorText: `This WebApp cannot be reached on ${
-              window.location.host
-            }`
-          });
-        });
-    }
-    let selectionPool = [window.location.host, this.state.webappaddress];
-    this.setState({
-      tempwebaddress:
-        selectionPool[this.state.deploymentBoxSelectedStatus ? 1 : 0]
-    });
-    this.setState({
-      deploymentBoxSelectedStatus: !this.state.deploymentBoxSelectedStatus
-    });
-  }
-
-  updateDemoModelData() {
-    if (!this.validateIP()) {
-      this.setState({ addressErrorText: "Invalid IP address" });
-    } else {
-      this.setState({ addressErrorText: "" });
-    }
-    if (!this.validatePort(this.state.port)) {
-      this.setState({ portErrorText: "Invalid port number" });
-    } else {
-      this.setState({ portErrorText: "" });
-    }
-    if (
-      this.state.name.length === 0 ||
-      /*eslint-disable*/
-      /[~`!#$%\^&*+=\-\[\]\\';,/{}|":<>\?]/g.test(this.state.name)
-      /*eslint-enable*/
-    ) {
-      this.setState({ nameErrorText: "Invalid Project Name" });
-    } else {
-      this.setState({ nameErrorText: "" });
-    }
-    if (
-      this.state.name.length > 0 &&
-      /*eslint-disable*/
-      !/[~`!#$%\^&*+=\-\[\]\\';,/{}|":<>\?]/g.test(this.state.name) &&
-      /*eslint-enable*/
-      this.validateIP() &&
-      this.validatePort(this.state.port)
-    ) {
-      let dataToPut = {
-        name: this.state.name,
-        id: this.state.id,
-        user_id: this.state.user_id,
-        address: this.state.address,
-        description: this.state.description,
-        footer_message: this.state.footer_message,
-        cover_image: this.state.cover_image,
-        terminal: this.state.showTerminal,
-        timestamp: Date.now(),
-        token: `nongh:${this.state.address}:${this.state.id}:${
-          this.state.currentPort
-        }:${this.state.port}:${this.state.tempwebaddress}`,
-        status: this.state.status || "input"
-      };
-      this.props.nonghModelActions.addToDBNonGHDemoModel(dataToPut).then(() => {
-        this.props.nonghModelActions
-          .updateNonGHDemoModel(dataToPut)
-          .then(() => {
-            if (Object.keys(this.state.permalinkObject).length > 0) {
-              const permaLinkDataToPut = Object.assign(
-                {},
-                this.state.permalinkObject,
-                {
-                  full_relative_url: `/ngh/user/${dataToPut.user_id}/${
-                    dataToPut.name
-                  }/${dataToPut.id}/demo`
-                }
-              );
-
-              modifyPermalink(permaLinkDataToPut)
-                .then(() => {
-                  if (this.props.match.params.type === "modify") {
-                    this.props.history.push("/ngh/user");
-                  } else {
-                    this.props.history.push(
-                      `/ngh/user/${this.state.name}/${
-                        this.state.id
-                      }/inputcomponent`
-                    );
-                  }
-                })
-                .catch(err => {
-                  toastr.error(
-                    `Error occured in creating shortened URL: ${permaLinkDataToPut}`
-                  );
-                });
-            } else {
-              const permaLinkDataToPut = {
-                short_relative_url: `/p/${Math.random()
-                  .toString(36)
-                  .substring(2, 11)}`,
-                full_relative_url: `/ngh/user/${dataToPut.user_id}/${
-                  dataToPut.name
-                }/${dataToPut.id}/demo`,
-                user_id: dataToPut.user_id,
-                project_id: dataToPut.id
-              };
-
-              addPermalink(permaLinkDataToPut)
-                .then(() => {
-                  if (this.props.match.params.type === "modify") {
-                    this.props.history.push("/ngh/user");
-                  } else {
-                    this.props.history.push(
-                      `/ngh/user/${this.state.name}/${
-                        this.state.id
-                      }/inputcomponent`
-                    );
-                  }
-                })
-                .catch(err => {
-                  toastr.error(
-                    `Error occured in creating shortened URL: ${permaLinkDataToPut}`
-                  );
-                });
-            }
-          });
-      });
-    }
-  }
-
-
   updateDescription(e) {
     this.setState({ description: e.target.value });
   }
 
-  updatefooter_message(e) {
-    this.setState({ footer_message: e.target.value });
-  }
-
-  updateAddress(e) {
-    this.setState({ address: e.target.value });
-  }
-
-  updatePort(e) {
-    this.setState({ port: e.target.value });
-  }
-
+ 
   updateName(e) {
     this.setState({ name: e.target.value });
   }
@@ -388,54 +77,12 @@ class RegisterPage extends React.Component {
     this.setState({ showTerminal: !this.state.showTerminal });
   }
 
-  validateTempwebaddress() {
-    if (
-      this.state.webappUnreachableErrorText.length > 0 &&
-      this.state.tempwebaddress === this.state.webappaddress
-    ) {
-      return false;
-    }
-    if (
-      this.state.webappLocalUnreachableErrorText.length > 0 &&
-      this.state.tempwebaddress === "0.0.0.0"
-    ) {
-      return false;
-    }
-
-    return true;
-  }
-
-  validateIP() {
-    if (this.state.address.split(".").length <= 2) {
-      return false;
-    } else {
-      return rangeCheck.validIp(this.state.address);
-    }
-  }
-
-  validatePort(port) {
-    function isNumeric(value) {
-      return /^\d+$/.test(value);
-    }
-
-    if (isNumeric(port)) {
-      const portNumber = parseInt(port);
-      return !!(portNumber >= 1024 && portNumber <= 65535);
-    } else {
-      return false;
-    }
-  }
-
-  toggleShow() {
-    this.setState({
-      showOutput: this.state.showOutput === "visible" ? "hidden" : "visible"
-    });
-  }
+  
 
   getStyles() {
     return {
       layout: {
-        background: '#F0F0F0' 
+        background: '#F7F7F7' 
       },
       content: {
         margin: "24px 0 0 12px",
@@ -443,7 +90,7 @@ class RegisterPage extends React.Component {
       },
       contentDiv: {
         padding: "5px 0",
-        background: '#F0F0F0'
+        background: '#F7F7F7'
       },
       footer: {
         backgroundColor: grey900,
@@ -509,10 +156,11 @@ class RegisterPage extends React.Component {
 
         
       },
-      tpbox:{
+      box1:{
         border:'1px solid #F3F2F2',
         backgroundColor:'White',
-        bordeRadius: '3px'
+        borderRadius: '10px',
+        padding:'20px'
       },
 
       sub:{
@@ -568,15 +216,15 @@ class RegisterPage extends React.Component {
     window.location= ORIGAMI_READ_THE_DOCS ;
   }
 
+  submit() {
+  this.props.history.push("/instructions");
+
+
+  }
+
   render() {
 
     const { active } = this.state
-    let tokenClassName =
-      this.validateTempwebaddress() &&
-      this.validateIP() &&
-      this.validatePort(this.state.port)
-        ? "ui positive message"
-        : "ui negative message";
     let styles = this.getStyles();
     const content = (
       <div>
@@ -596,10 +244,9 @@ class RegisterPage extends React.Component {
     )
  }
 
-  
 
     return (
-      <div style={{backgroundColor:'#CDCDCD'}}>
+      <div style={{backgroundColor:'#F7F7F7'}}>
       <Layout style={styles.layout}>
         {this.state.showOutput === "hidden" && (
           <div className="centered row" style={{ marginTop: "30vh" }}>
@@ -618,10 +265,25 @@ class RegisterPage extends React.Component {
                   marginTop:"5px"
                 }}
               >
+              <div
+                className="sixteen wide column stretched"
+                style={{ visibility: this.state.showOutput }}
+              >
+                <h1
+                  style={{
+                    textAlign: "center",
+                    fontSize: '20px',
+                    fontWeight:'bold'
+                  }}
+                >
+                  Register Application
+                </h1>
+
+                </div>
                 <Stepper linear={false}>
                   <Step active>
                     <StepLabel>
-                      <b style={{ fontSize: "large" }}>Register Application</b>
+                      <b >Register Application</b>
                     </StepLabel>
                   </Step>
                   <Step active={this.state.inputComponentStepperHighlight}>
@@ -632,32 +294,21 @@ class RegisterPage extends React.Component {
               </div>
 
             </Row>
-            <div style={styles.tpbox}>
-              <div
-                className="sixteen wide column stretched"
-                style={{ visibility: this.state.showOutput }}
-              >
-                <h1
-                  style={{
-                    textAlign: "center",
-                    margin: "25px 0 40px"
-                  }}
-                >
-                  Register Application
-                </h1>
+            <div >
 
-                </div>
-                                <div
+
+              <div
                   className="ui grid container"
                   style={{ position: "relative" }}
                 >
+
                 <div className="ui grid container" >
 
                     <div
                       className="column aligned"
                       style={styles.box}
                     >
-
+                <div style={styles.box1} >
                 <a class="ui tag label large" style={{boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'}} >Step 1 : Basic Details</a>
                 <br/>
                          <div class="ui grid">
@@ -685,6 +336,7 @@ class RegisterPage extends React.Component {
                       </div>
 
                     </div>
+                  </div>
 
                   <a className="ui tag label large" style={{marginTop:'50px',boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'}}>Step 2 : Choose your Task</a>
                   <br/>
@@ -864,24 +516,14 @@ class RegisterPage extends React.Component {
 
               <div className="two wide column" />
               <div className="three wide column">
-                  <Button primary onMouseEnter={this.sub.bind(this,2)} onMouseLeave={this.exit} style={this.state.subhover==2 ?styles.subhover:styles.sub}  >
+                  <Button primary onMouseEnter={this.sub.bind(this,2)} onMouseLeave={this.exit} onClick={this.submit.bind(this)} style={this.state.subhover==2 ?styles.subhover:styles.sub}  >
                         <text style={styles.txt}>
                         Submit
                         </text>
                   </Button>
               </div>
 
-              </div>
-
-
-                             
-
-
-
-
-
-
-
+              </div>                           
                     </div>
 
                 </div>
@@ -901,8 +543,6 @@ RegisterPage.propTypes = {
   user: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  nonghDemoModel: PropTypes.object.isRequired,
-  nonghModelActions: PropTypes.object.isRequired
 };
 
 RegisterPage.contextTypes = {
@@ -913,16 +553,12 @@ function mapStateToProps(state, ownProps) {
   return {
     login: state.login,
     user: state.user,
-    nonghDemoModel: state.nonghDemoModel
+
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    nonghModelActions: bindActionCreators(nonghDemoModelActions, dispatch)
-  };
-}
+
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(RegisterPage)
+  connect(mapStateToProps)(RegisterPage)
 );

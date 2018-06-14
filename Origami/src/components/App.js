@@ -220,7 +220,7 @@ class App extends React.Component {
     }
       console.log("loc =",this.props.location.pathname)
       return (
-        <Layout id="layout" style={{ height: "100vh",width:"100%",backgroundColor:'#F0F0F0' }}>
+        <Layout id="layout" style={{ height: "100vh",width:"100%",backgroundColor:'#F7F7F7' }}>
           {Routes}
         </Layout>
       );
