@@ -41,7 +41,7 @@ export default (
 
     <Route
       exact
-      path="/ngh/user/register"
+      path="/ngh/demo_register"
       component={RegisterNonGHPageComponent}
     />
     <Route

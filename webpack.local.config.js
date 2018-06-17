@@ -2,10 +2,12 @@ import path from "path";
 import webpack from "webpack";
 import BundleTracker from "webpack-bundle-tracker";
 
+
 const config = {
   devtool: "cheap-module-eval-source-map",
   entry: [
     "webpack-dev-server/client?http://localhost:3000",
+    "font-awesome/scss/font-awesome.scss",
     "webpack/hot/only-dev-server",
     "./Origami/src/index"
   ],
@@ -43,7 +45,7 @@ const config = {
         use: ['style-loader','css-loader', 'sass-loader']
       },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
-      { test: /\.(woff|woff2)$/, loader: "url-loader?prefix=font/&limit=5000" },
+      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url-loader?limit=10000&mimetype=application/octet-stream"
@@ -52,6 +54,7 @@ const config = {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url-loader?limit=10000&mimetype=image/svg+xml"
       },
+      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
       { test: /\.(jpe?g|png|gif)$/i, loader: "file-loader?name=[name].[ext]" }
     ]
   }

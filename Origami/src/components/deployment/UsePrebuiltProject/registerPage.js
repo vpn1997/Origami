@@ -36,7 +36,10 @@ class RegisterPage extends React.Component {
       active:0,
       btnactive:0,
       btnclicked:0,
-      subhover:0
+      subhover:0,
+      python:0,
+      os:0,
+      cuda:0,
     };
     this.updateName = this.updateName.bind(this);
     this.updateDescription = this.updateDescription.bind(this);
@@ -101,10 +104,18 @@ class RegisterPage extends React.Component {
         zIndex: "2"
       },
       tag:{
-        color:'#938E8E',
+        color:'#606470',
         paddingTop:'5px',
         fontFamily:'"Open Sans", "Helvetica", sans-serif',
-        fontSize:'1.5em'
+        fontSize:'1.6em'
+
+      },
+      tag1:{
+        color:'#606470',
+        paddingTop:'5px',
+        fontFamily:'"Open Sans", "Helvetica", sans-serif',
+        fontSize:'1.6em',
+        paddingLeft:'7px'
 
       },
       config:{
@@ -160,7 +171,8 @@ class RegisterPage extends React.Component {
         border:'1px solid #F3F2F2',
         backgroundColor:'White',
         borderRadius: '10px',
-        padding:'20px'
+        padding:'10px',
+
       },
 
       sub:{
@@ -175,7 +187,7 @@ class RegisterPage extends React.Component {
       },
 
       subhover:{
-                borderStyle:'Solid',
+        borderStyle:'Solid',
         width:'100%',
         borderWidth:'2px',
         borderRadius:'30px',
@@ -184,7 +196,11 @@ class RegisterPage extends React.Component {
         boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)', 
         transition: 'all 0.3s' 
 
-      }
+      },
+      logo:{
+        marginRight:'13px'
+      },
+
 
     };
   }
@@ -198,9 +214,25 @@ class RegisterPage extends React.Component {
     this.setState({btnactive:e});
     }
 
-         btnclicked(e){
+         btnclicked(x,y){
+    let python=this.state.python,os=this.state.os,cuda=this.state.cuda;
+    console.log("btn clicked", x,y);
 
-    this.setState({btnclicked:e});
+
+    switch(x){
+      case 1:
+            os=y;
+            break;
+      case 2:
+            python=y;
+            break;
+      case 3:
+            cuda=y;
+            break;
+
+         }
+    console.log("os python cuda =",os,python,cuda);
+    this.setState({python:python,os:os,cuda:cuda});
     }
 
     exit(){
@@ -309,11 +341,10 @@ class RegisterPage extends React.Component {
                       style={styles.box}
                     >
                 <div style={styles.box1} >
-                <a class="ui tag label large" style={{boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'}} >Step 1 : Basic Details</a>
-                <br/>
-                         <div class="ui grid">
-                         <div class="two wide column">
-                         </div>
+              <a style={{marginLeft:'40%',fontSize:'18px'}}><span><a style={styles.logo}><img src={require('../../assets/details.png')}/></a></span> Demo Details</a>
+                <hr  style={{borderTop: 'dotted 1px',color:"#aaaaaa"}}/>
+                         <div class="ui grid" >
+                         <div class="two wide column"/>                        
                  <div class="four wide column">
                       <TextField
                         hintText="MyApp"
@@ -323,7 +354,7 @@ class RegisterPage extends React.Component {
                         onChange={this.updateName}
                       />
                       </div>
-                      <div class="two wide column">
+                      <div class="three wide column">
                       </div>
                  <div class="four wide column">
                       <TextField
@@ -336,15 +367,19 @@ class RegisterPage extends React.Component {
                       </div>
 
                     </div>
+                    <br/>
                   </div>
-
-                  <a className="ui tag label large" style={{marginTop:'50px',boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'}}>Step 2 : Choose your Task</a>
                   <br/>
+                  <br/>
+
+                <div style={styles.box1} >
+                  <a style={{marginLeft:'40%',fontSize:'18px'}}><span><a style={styles.logo}><img src={require('../../assets/task.png')}/></a></span>Choose your Task</a>
+                  <hr  style={{borderTop: 'dotted 1px',color:"#aaaaaa"}}/>
                   <br/>
 
                   <div className="ui grid">
-                  <div className="two wide column">
-                  </div>
+                  <div class="two wide column"/>  
+
                   <div className=" three wide column">
                     <Cards header={'VQA'} count={1}/>
                   </div>
@@ -358,125 +393,116 @@ class RegisterPage extends React.Component {
                     <Cards header={'Classification'} count={2}/> 
                   </div>
                   
-                 
                   </div>
+                  <br/>
+                  <br/>
+                  </div>
+                  <br/>
+                  <br/>
 
-                  <a class="ui tag label large" style={{marginTop:'50px',boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'}}>Step 3 : Select System Configuration</a>
+                  <div style={styles.box1} >
+                  <a  style={{marginLeft:'35%',fontSize:'18px'}}><span><a style={styles.logo}><img src={require('../../assets/tools.png')}/></a></span>Select System Configuration</a>
+                  <hr  style={{borderTop: 'dotted 1px',color:"#aaaaaa"}}/>
                   <br/>
                   <br/>
                   <div className="ui grid">
-                  <div className="one wide column">
+                  <div className="three wide column">
                   </div>
                   <div className="one wide column" >
-                  <text style={styles.tag}>OS  </text>
+                  <text style={styles.tag1}>OS  </text>
                   </div>
-                  <div className="three wide column" >
-                    <Button onMouseEnter={this.btnEnter.bind(this,1)} onClick={this.btnclicked.bind(this,1)} onMouseLeave={this.exit}
-                     style={this.state.btnactive==1||this.state.btnclicked==1?styles.btnactive:styles.config} >
+                  <div className="one wide column" />
+                  <div className="four wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,11)} onClick={this.btnclicked.bind(this,1,1)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==11||this.state.os==1?styles.btnactive:styles.config} >
                         <text style={styles.txt}>
-                        Linux
+                        Ubuntu 14.04
                         </text>
                     </Button>
                   </div>
-                  <div className="three wide column" >
-                    <Button onMouseEnter={this.btnEnter.bind(this,2)} onClick={this.btnclicked.bind(this,2)} onMouseLeave={this.exit}
-                     style={this.state.btnactive==2||this.state.btnclicked==2?styles.btnactive:styles.config} >
+                  <div className="four wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,12)} onClick={this.btnclicked.bind(this,1,2)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==12||this.state.os==2?styles.btnactive:styles.config} >
                         <text style={styles.txt}>
-                        MacOS
+                        Ubuntu 16.04
                         </text>
                     </Button>
                   </div>                  
-                  <div className="three wide column" >
-                    <Button onMouseEnter={this.btnEnter.bind(this,3)} onClick={this.btnclicked.bind(this,3)} onMouseLeave={this.exit}
-                     style={this.state.btnactive==3||this.state.btnclicked==3?styles.btnactive:styles.config}>
-                        <text style={styles.txt}>
-                        Windows
-                        </text>
-                    </Button>
-                  </div>
+
                   </div> 
 
-                                    <div className="ui grid">
 
-                  <div className="two wide column" style={{paddingLeft:'50px'}}>
+                    <div className="ui grid">
+
+                    <div className="three wide column"/>
+                  <div className="one wide column" >
                   <h2 style={styles.tag}> Python </h2>
                   </div>
-                  <div className="three wide column" >
-                    <Button onMouseEnter={this.btnEnter.bind(this,4)} onClick={this.btnclicked.bind(this,4)} onMouseLeave={this.exit}
-                     style={this.state.btnactive==4||this.state.btnclicked==4?styles.btnactive:styles.config} >
+                  <div className="one wide column" />
+                  <div className="four wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,21)} onClick={this.btnclicked.bind(this,2,1)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==21||this.state.python==1?styles.btnactive:styles.config} >
                         <text style={styles.txt}>
                         2.7
                         </text>
                     </Button>
                   </div>
-                  <div className="three wide column" >
-                    <Button onMouseEnter={this.btnEnter.bind(this,5)} onClick={this.btnclicked.bind(this,5)} onMouseLeave={this.exit}
-                     style={this.state.btnactive==5||this.state.btnclicked==5?styles.btnactive:styles.config} >
+                  <div className="four wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,22)} onClick={this.btnclicked.bind(this,2,2)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==22||this.state.python==2?styles.btnactive:styles.config} >
                         <text style={styles.txt}>
                         3.5
                         </text>
                     </Button>
                   </div>                  
-                  <div className="three wide column" >
-                    <Button onMouseEnter={this.btnEnter.bind(this,6)} onClick={this.btnclicked.bind(this,6)} onMouseLeave={this.exit}
-                     style={this.state.btnactive==6||this.state.btnclicked==6?styles.btnactive:styles.config} >
-                        <text style={styles.txt}>
-                        3.6
-                        </text>
-                    </Button>
-                  </div>
+
                   </div>
 
 
                     <div className="ui grid">
-
-                  <div className="two wide column" style={{paddingLeft:'50px'}}>
+                  <div className="three wide column"/>
+                  <div className="one wide column" >
                   <h2 style={styles.tag}>  CUDA </h2>
                   </div>
-                  <div className="two wide column" >
-                    <Button onMouseEnter={this.btnEnter.bind(this,7)} onClick={this.btnclicked.bind(this,7)} onMouseLeave={this.exit}
-                     style={this.state.btnactive==7||this.state.btnclicked==7?styles.btnactive:styles.config} >
+                  <div className="one wide column" />
+                  <div className="four wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,31)} onClick={this.btnclicked.bind(this,3,1)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==31||this.state.cuda==1?styles.btnactive:styles.config} >
                         <text style={styles.txt}>
-                        8
+                        7.0 - runtime
                         </text>
                     </Button>
                   </div>
-                  <div className="two wide column" >
-                    <Button onMouseEnter={this.btnEnter.bind(this,8)} onClick={this.btnclicked.bind(this,8)} onMouseLeave={this.exit}
-                     style={this.state.btnactive==8||this.state.btnclicked==8?styles.btnactive:styles.config} >
+                  <div className="four wide column" >
+                    <Button onMouseEnter={this.btnEnter.bind(this,32)} onClick={this.btnclicked.bind(this,3,2)} onMouseLeave={this.exit}
+                     style={this.state.btnactive==32||this.state.cuda==2?styles.btnactive:styles.config} >
                         <text style={styles.txt}>
-                        9
+                        8.0 - runtime
                         </text>
                     </Button>
                   </div>                  
-                  <div className="two wide column" >
-                    <Button onMouseEnter={this.btnEnter.bind(this,9)} onClick={this.btnclicked.bind(this,9)} onMouseLeave={this.exit}
-                     style={this.state.btnactive==9||this.state.btnclicked==9?styles.btnactive:styles.config} >
-                        <text style={styles.txt}>
-                        9.1
-                        </text>
-                    </Button>
-                  </div>
-                  <div className="two wide column" >
-                    <Button onMouseEnter={this.btnEnter.bind(this,10)} onClick={this.btnclicked.bind(this,10)} onMouseLeave={this.exit}
-                     style={this.state.btnactive==10||this.state.btnclicked==10?styles.btnactive:styles.config} >
-                        <text style={styles.txt}>
-                        None
-                        </text>
-                    </Button>
-                  </div>
-                  </div>
-          
+ 
 
-                  <a className="ui tag label large" style={{marginTop:'50px',boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'}}>Step 4 (optional) : Upload cover Image </a>
-                                            <br/>
+                  </div>
+                  <br/>
+                  <br/>
+                  </div>
+                  <br/>
+                  <br/>
+
+                  <div style={styles.box1} >
+                  <a style={{marginLeft:'35%',fontSize:'18px'}}><span><a style={styles.logo}><img src={require('../../assets/settings.png')}/></a></span> Optional configurations </a>
+                  <hr  style={{borderTop: 'dotted 1px',color:"#aaaaaa"}}/>
+                  
+   
                   <br/>
                   <div className="ui grid">
-                  <div className="one wide column"/>
-                  <div className="seven wide column">
+                 
+                  <div className="two column row">
+                  <div className="column" style={{paddingLeft:'13%'}} >
                   <div
                         className=""
-                        style={{ cursor: "pointer", maxWidth: "50%" }}
+                        style={{ cursor: "pointer", maxWidth: "75%" }}
                       >
                         <Dropzone
                           onDrop={this.onDrop}
@@ -486,24 +512,57 @@ class RegisterPage extends React.Component {
                           <div className="ui card">
                             <div className="ui fluid image">
                               <img
-                                className="ui fluid medium bordered image"
+                                className="ui fluid medium  image"
                                 src={
                                   this.state.cover_image ||
-                                  "/static/img/wireframe.png"
+                                  "/static/img/placeholder.jpg"
                                 }
                                 id={"input-image-preview"}
                               />
                             </div>
-                            <div className="content">
+                            <div className="content" style={{fontSize:'15px',color:'#323643'}}>
                               Drag and Drop or Click to upload cover image
                             </div>
                           </div>
                         </Dropzone>
                       </div>
-                  </div>
-                  </div>
+                    </div>
+                  
 
-  
+                  <div className="column" style={{paddingLeft:'5%'}} >
+                  <br/>
+                  <div className="row">
+                    <div class="ui checkbox" >
+                      <input type="checkbox" name="example" />
+                      <label style={{fontSize:'17px',color:'#323643'}}> Show Terminal on Demo Page</label>
+                    </div>
+                  </div>
+                  <br/>
+                  <div className="row">
+                  <div class="four wide column">
+                  <span><a style={styles.logo}><img src={require('../../assets/code .png')}/></a></span>
+                      <TextField
+                        hintText="https://github.com/"
+                        floatingLabelText="Link to Source Code"
+                        value={this.state.name}
+                        errorText={this.state.nameErrorText}
+                        onChange={this.updateName}
+                      />
+                    </div>
+
+                  </div>
+                  </div>
+                  </div>
+     
+                
+
+
+
+                  </div>
+                </div>
+
+              <br/>
+              <br/>
               <div className="ui grid">
                <div className="three wide column" />
                <div className="three wide column" >

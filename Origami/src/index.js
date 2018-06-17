@@ -19,6 +19,7 @@ import 'flag-icon-css/css/flag-icon.min.css';
 
 import 'simple-line-icons/css/simple-line-icons.css';
 import './ui/src/scss/style.css';
+require('font-awesome/css/font-awesome.css');
 import { LocaleProvider } from "antd";
 import enUS from "antd/lib/locale-provider/en_US";
 const store = configureStore();
