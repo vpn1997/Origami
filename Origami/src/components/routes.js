@@ -25,10 +25,6 @@ function Loading() {
   return <div>Loading...</div>;
 }
 
-const Colors = Loadable({
-  loader: () => import('../ui/src/views/Theme/Colors'),
-  loading: Loading,
-});
 export default (
   <Switch>
     <Route  exact path="/land" component={LandingPage} />

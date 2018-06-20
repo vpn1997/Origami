@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import logo from '../../../../../../origami_logo.png'
 import sygnet from '../../../../components/assets/cloudcv_logo.png'
-import pic from './6.jpg'
 import { getSearchedDemos } from "../../../../api/Nongh/getSearchedDemos";
 import { getAllPermalink } from "../../../../api/Nongh/permalink";
 import {

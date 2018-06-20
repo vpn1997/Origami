@@ -21,6 +21,7 @@ import "./index.css";
 import '@coreui/icons/css/coreui-icons.min.css';
 import 'flag-icon-css/css/flag-icon.min.css';
 import 'simple-line-icons/css/simple-line-icons.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 const { Header, Content, Footer, Sider } = Layout;
 
