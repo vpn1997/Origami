@@ -79,8 +79,6 @@ class App extends React.Component {
     rootApi
       .checkRootSettings()
       .then(data => {
-        console.log("data =");
-        console.log(data);
         if (
           window.location.pathname !== "/initialsetup" &&
           JSON.parse(data).root_user_github_login_id === null

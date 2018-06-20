@@ -14,16 +14,10 @@ const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
   { path: '/u/:username/:user_id', name: 'user', component: ShareProfile },
   { path: '/p/:shorturl', exact: true, name: 'short', component: URLShortenerComponent },
-  { path: '/ngh/demo_register', exact: true, name: 'Create demo', component: RegisterNonGHPageComponent },
+  { path: '/demo_register', exact: true, name: 'Create demo', component: RegisterNonGHPageComponent },
   { path: '/login*', name: 'login', component: LoginComponent },
   { path: '/ngh/user',exact: true,name:'My Demo', component:NonGHUserProfileComponent },
   { path: '/instructions',exact: true, component:InstructionsPage }
-
-
-
-
-
-
 ];
 
 export default routes;

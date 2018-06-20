@@ -1,7 +1,0 @@
-<-------------Adding CoreUi as an NPM package ---------------->
---1.Its not well maintained.
-  2.There are many things in the module that we cannot edit.
-
-
-<-------------Cloning CoreUI in Origami ---------------------->
-(starting)

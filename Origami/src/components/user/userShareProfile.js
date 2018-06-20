@@ -43,6 +43,7 @@ class ShareProfileComponent extends React.Component {
   }
 
   componentWillMount() {
+    this.initiateLogin()
     if (this.props.match.params.username) {
       is_cloudcv().then(data => {
         const rootData = JSON.parse(data);
@@ -129,6 +130,8 @@ class ShareProfileComponent extends React.Component {
       }
     };
   }
+
+
 
   goToDemo(demo) {
     this.props.history.push(

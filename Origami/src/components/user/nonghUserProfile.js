@@ -12,11 +12,12 @@ import { getAllPermalink, deletePermalink } from "../../api/Nongh/permalink";
 import Dialog from "material-ui/Dialog";
 import RaisedButton from "material-ui/RaisedButton";
 import toastr from "toastr";
-import { Layout, Icon, Button, Card, Row, Col, Input } from "antd";
+import { Layout, Icon, Button, Card, Row, Col, Input,Modal } from "antd";
 import Radium from "radium";
 import { trimAndPad } from "../../utils/generalUtils";
 import { DEMO_CARD_DESCRIP_MAX_LEN } from "../../constants";
 import { BounceLoader } from "react-spinners";
+
 
 const { Header, Content, Footer, Sider } = Layout;
 const Search = Input.Search;
@@ -41,6 +42,8 @@ class NonGHUserProfileComponent extends React.Component {
       demoLoading: true
     };
     this.socket = this.context.socket;
+    this.success = this.success.bind(this);
+    this.initiateLogin=this.initiateLogin.bind(this);
     this.deleteDemo = this.deleteDemo.bind(this);
     this.modifyProject = this.modifyProject.bind(this);
     this.getDisplayForDemoButton = this.getDisplayForDemoButton.bind(this);
@@ -55,7 +58,10 @@ class NonGHUserProfileComponent extends React.Component {
   }
 
   componentWillMount() {
-    !this.props.login && this.props.history.push("/");
+    this.initiateLogin();
+
+    if(this.props.login)
+    {
     this.props.useractions
       .LoadUser()
       .then(() => {
@@ -90,8 +96,22 @@ class NonGHUserProfileComponent extends React.Component {
       .catch(err => {
         toastr.error(`Error: ${err}`);
       });
+    }
+  }
+  success() {
+    const modal = Modal.info({
+      title: "Logging you in"
+    });
+    setTimeout(() => modal.destroy(), 2000);
   }
 
+  initiateLogin() {
+    if(!this.props.login)
+    {
+    this.success();
+    window.location = "/auth/github/login/";
+  }
+  }
   componentWillReceiveProps(nextProps) {
     if (this.state.user !== nextProps.user) {
       this.setState({ user: nextProps.user });

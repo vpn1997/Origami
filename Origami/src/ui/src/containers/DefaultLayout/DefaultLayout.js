@@ -24,6 +24,21 @@ import DefaultHeader from './DefaultHeader';
 import HomePage from '../../../../components/home/HomePage'
 
 class DefaultLayout extends Component {
+constructor(props, context) {
+  super(props, context);
+}
+
+
+componentWillMount() {
+
+  if(window.location.pathname==="/")
+  {
+    window.location="/home"
+  }
+
+  }
+
+
   render() {
     return (
       <div className="app">
@@ -34,7 +49,7 @@ class DefaultLayout extends Component {
           <AppSidebar fixed display="lg">
             <AppSidebarHeader  />
             <AppSidebarForm />
-            <AppSidebarNav navConfig={navigation} {...this.props} style={{backgroundColor:'Red'}} />
+            <AppSidebarNav navConfig={navigation} {...this.props} />
             <AppSidebarFooter />
             <AppSidebarMinimizer />
           </AppSidebar>

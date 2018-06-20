@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route,Redirect } from "react-router-dom";
 
 import PageNotfoundHandler from "./PageNotfoundHandler";
 import HomePageComponent from "./home/HomePage";
@@ -18,7 +18,6 @@ import NGHDemoPageComponent from "./deployment/UsePrebuiltProject/nghDemoPage";
 import NGHDemoFrameComponent from "./deployment/UsePrebuiltProject/nghDemoFrame";
 import DefaultLayout from "../ui/src/containers/DefaultLayout" 
 import Loadable from 'react-loadable'
-import LandingPage from './Landing/landing_page'
 import InstructionsPage from './deployment/UsePrebuiltProject/instructionsPage'
 
 function Loading() {
@@ -27,7 +26,7 @@ function Loading() {
 
 export default (
   <Switch>
-    <Route  exact path="/land" component={LandingPage} />
+  
     <Route  path="/" component={DefaultLayout} />
     <Route exact path="/home" component={HomePageComponent} />
     <Route exact path="/profile" component={LoginComponent} />
@@ -37,7 +36,7 @@ export default (
 
     <Route
       exact
-      path="/ngh/demo_register"
+      path="/demo_register"
       component={RegisterNonGHPageComponent}
     />
     <Route

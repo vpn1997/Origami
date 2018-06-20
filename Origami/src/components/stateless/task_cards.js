@@ -1,22 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import img2 from "../assets/wireframe.png"
+import img from '../assets/wireframe.png';
 
-
-const Cards = ({
-  header,
-  choice
-}) => {
-  
-  $('.special.cards .image').dimmer({
-  on: 'hover'
-});
-const img={}
-
-img[2]=img2
-
-
-return(
+const Cards = ({ header, choice }) => {
+  return (
     <div class="ui special cards">
       <div class="card">
         <div class="blurring dimmable image">
@@ -27,19 +14,13 @@ return(
               </div>
             </div>
           </div>
-          <img src={img[2]}/>
+          <img src={img} />
         </div>
         <div class="content">
           <a class="header">{header}</a>
         </div>
       </div>
-      </div>
-
-
-
-
-	);
-
-
+    </div>
+  );
 };
 export default Cards;

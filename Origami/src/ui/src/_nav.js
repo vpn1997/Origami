@@ -15,13 +15,13 @@ export default {
     },      
     {
       name: 'Create demo',
-      url: '/ngh/demo_register',
+      url: '/demo_register',
       icon: 'fas fa-pen-square'
 
     },
     {
       name: 'Help',
-      url: '/home',
+      url: '/help',
       icon: 'fas fa-book'
 
     },
