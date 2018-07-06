@@ -380,8 +380,10 @@ def bundledown(request,id,user_id):
         f.close()
     if not os.path.exists(hex+'/main.py'):  
         main=copyfile('template/main.py', directory+'/main.py')
+    if not os.path.exists(hex+'/setup.sh'):  
+        main=copyfile('template/setup.sh', directory+'/setup.sh')
 
-    l=['/Dockerfile','/requirements.txt','/main.py','/origami.env']
+    l=['/Dockerfile','/requirements.txt','/main.py','/origami.env','/setup.sh']
     zipped=zipfile.ZipFile(hex+'.zip','w')
     for i in l: 
         zipped.write(hex+i,os.path.basename(hex+i))

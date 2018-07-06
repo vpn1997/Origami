@@ -6,11 +6,8 @@ app = Origami("VisualDialog")
 
 @app.listen()
 @app.origami_api
-def inference(image, question, **kwargs):
+def inference():
     '''
-    Arguments:
-        image: Input image for VQA Demo
-        question: Input question for VQA demo
     Returns:
         answer: Answer for the given question and image
     '''
@@ -22,7 +19,7 @@ def inference(image, question, **kwargs):
     import random
     random_answers = ["hello", "world", "foo", "bar"]
     answer = random.choice(random_answers)
-    app.send_text_array()
+    app.send_text_array([answer])
 
     # returns the answer
     return answer
